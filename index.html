@@ -49,6 +49,42 @@
             position: relative;
         }
 
+        /* Mobile Overlay */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            transition: opacity 0.3s;
+        }
+
+        .mobile-overlay.active {
+            display: block; opacity: 1;
+        }
+
+        /* Mobile Header */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: var(--card);
+            border-bottom: 2px solid var(--border);
+            padding: 12px 16px;
+            z-index: 1000;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .mobile-header.show { display: flex; }
+
+        .menu-toggle {
+            background: none; border: none; font-size: 1.4rem; color: var(--text); cursor: pointer; padding: 8px; border-radius: 10px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+        }
+
+        .mobile-logo { font-size: 1.3rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
         /* Sidebar - Glassmorphism */
         .sidebar {
             width: 280px;
@@ -59,136 +95,221 @@
             padding: 28px;
             overflow-y: auto;
             position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
+            left: 0; top: 0; height: 100vh;
             z-index: 999;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 48px;
-            display: flex; align-items: center; gap: 12px;
-        }
+        .sidebar.closed { transform: translateX(-100%); }
+
+        .logo { font-size: 1.8rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
 
         .nav-section { margin-bottom: 24px; }
-        .nav-label { font-size: 0.75rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; margin-bottom: 12px; padding-left: 16px; }
+        .nav-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-light); letter-spacing: 0.05em; margin-bottom: 12px; padding-left: 16px; }
         .nav-links { list-style: none; }
-        .nav-link { display: flex; align-items: center; gap: 14px; padding: 14px 16px; color: var(--text-light); text-decoration: none; border-radius: 16px; transition: all 0.3s; cursor: pointer; font-weight: 600; }
+        .nav-item { margin-bottom: 4px; }
+        .nav-link { display: flex; align-items: center; gap: 14px; padding: 14px 16px; color: var(--text-light); text-decoration: none; border-radius: 16px; transition: all 0.3s; cursor: pointer; font-weight: 600; border: 2px solid transparent; position: relative; }
         .nav-link:hover { background: var(--bg); color: var(--primary); transform: translateX(4px); }
-        .nav-link.active { background: var(--primary); color: white; }
-        
+        .nav-link.active { background: var(--primary); color: white; border-color: var(--primary-light); }
+        .badge-new { background: var(--gradient-2); color: white; font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: auto; }
+
+        /* Tier Tacker in Sidebar */
+        .tier-card { padding: 16px; background: var(--bg); border-radius: 16px; margin-top: auto; border: 2px solid var(--border); }
+        .tier-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.8rem; }
+        .progress-bar { height: 8px; background: var(--border); border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--gradient-1); width: 65%; border-radius: 10px; }
+
         /* Main Content */
         .main-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 40px;
-            margin-left: 280px;
-            padding-top: 40px;
+            flex-grow: 1; overflow-y: auto; padding: 40px; margin-left: 280px; transition: margin-left 0.3s; padding-top: 80px;
         }
 
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .page-title h1 { font-size: 2rem; font-weight: 800; color: var(--dark); }
-        .page-title p { color: var(--text-light); margin-top: 8px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
+        .page-title h1 { font-size: 2rem; font-weight: 800; color: var(--dark); background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .page-title p { color: var(--text-light); font-size: 1rem; margin-top: 8px; font-weight: 500; }
 
-        /* Cards */
-        .card { background: var(--card); border-radius: 24px; padding: 28px; border: 2px solid var(--border); margin-bottom: 24px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 32px; }
+        /* Buttons */
+        .btn { padding: 14px 28px; border-radius: 16px; border: none; cursor: pointer; font-weight: 700; font-size: 0.95rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; min-height: 48px; }
+        .btn-primary { background: var(--gradient-1); color: white; }
+        .btn-accent { background: var(--gradient-4); color: white; }
+        .btn-secondary { background: var(--gradient-2); color: white; }
+        .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
+        .btn-sm { padding: 10px 20px; font-size: 0.875rem; min-height: 40px; }
+        .btn-full { width: 100%; }
+
+        /* Page Layouts */
+        .page-section { display: none; }
+        .page-section.active { display: block; animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-bottom: 32px; }
+        .card { background: var(--card); border-radius: 24px; padding: 28px; border: 2px solid var(--border); margin-bottom: 24px; transition: 0.3s; }
+        .card:hover { border-color: var(--primary-light); }
+        
         .stat-card { position: relative; overflow: hidden; }
         .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-1); }
         .stat-card.pink::before { background: var(--gradient-2); }
         .stat-card.green::before { background: var(--gradient-4); }
-
-        .stat-card .value { font-size: 2.2rem; font-weight: 800; margin: 10px 0; }
+        .stat-card h3 { color: var(--text-light); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+        .stat-card .value { font-size: 2.2rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
         .sub-text { font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
         .text-success { color: var(--accent); }
         .text-warning { color: var(--warning); }
 
-        /* Progress Tiers */
-        .tier-progress { margin-top: 24px; }
-        .tier-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.85rem; }
-        .progress-bar { height: 10px; background: var(--bg); border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--gradient-1); border-radius: 10px; width: 65%; }
-
-        /* Niche Badge Selector */
+        /* Niche Grid */
         .niche-grid { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-        .niche-tag { padding: 8px 16px; border-radius: 12px; border: 2px solid var(--border); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .niche-tag { padding: 10px 20px; border-radius: 12px; border: 2px solid var(--border); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.3s; }
         .niche-tag.active { border-color: var(--primary); background: #eef2ff; color: var(--primary); }
 
-        /* Wallet Hero */
-        .wallet-hero { background: var(--gradient-1); border-radius: 32px; padding: 40px; color: white; display: flex; flex-direction: column; gap: 20px; }
-        .balance-label { opacity: 0.9; font-weight: 600; }
-        .balance-value { font-size: 3.5rem; font-weight: 800; }
-        .withdrawal-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .method-btn { padding: 16px; border-radius: 16px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: 0.3s; }
-        .method-btn:hover { background: rgba(255,255,255,0.2); }
+        /* Alert Card */
+        .alert-card { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #fbbf24; border-radius: 24px; padding: 24px; margin-bottom: 32px; display: flex; align-items: center; gap: 20px; }
+        .alert-icon { width: 56px; height: 56px; background: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--warning); }
 
         /* Merchant CTA */
         .merchant-cta { background: var(--dark); color: white; padding: 32px; border-radius: 24px; margin-top: 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
         .merchant-cta h3 { font-size: 1.5rem; margin-bottom: 8px; }
-        .merchant-cta p { opacity: 0.7; }
-        .btn-white { background: white; color: var(--dark); padding: 12px 24px; border-radius: 12px; font-weight: 800; text-decoration: none; display: inline-block; }
+        .btn-white { background: white; color: var(--dark); padding: 12px 24px; border-radius: 12px; font-weight: 800; text-decoration: none; }
 
-        /* Page Layouts */
-        .page-section { display: none; transition: 0.3s; }
-        .page-section.active { display: block; }
+        /* Wallet Hero */
+        .wallet-hero { background: var(--gradient-1); border-radius: 32px; padding: 40px; color: white; margin-bottom: 32px; position: relative; overflow: hidden; }
+        .wallet-hero .balance { font-size: 3.5rem; font-weight: 800; margin-bottom: 24px; }
+        .wallet-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+        .wallet-actions .btn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); color: white; }
+
+        /* Responsive Settings */
+        @media (max-width: 768px) {
+            .mobile-header.show { display: flex; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 80px 16px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .wallet-hero .balance { font-size: 2.2rem; }
+        }
+
+        /* Forms */
+        .form-group { margin-bottom: 24px; }
+        .form-group label { display: block; margin-bottom: 10px; font-weight: 700; color: var(--dark); }
+        .form-group input, .form-group select { width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: 16px; font-size: 1rem; transition: 0.3s; }
+        .form-group input:focus { outline: none; border-color: var(--primary); background: #eef2ff; }
+        
+        /* Table Styles */
+        .table-container { overflow-x: auto; border: 2px solid var(--border); border-radius: 16px; margin-top: 12px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { text-align: left; padding: 16px; color: var(--text-light); font-size: 0.8rem; border-bottom: 2px solid var(--border); }
+        td { padding: 18px 16px; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+
+        /* Tags */
+        .tag { padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+        .tag-new { background: #d1fae5; color: var(--accent); }
+        .tag-time { background: #fef3c7; color: var(--warning); }
+        .tag-hot { background: #fee2e2; color: var(--danger); }
+
+        /* Upload Zone */
+        .upload-zone { border: 3px dashed var(--border); border-radius: 24px; padding: 48px; text-align: center; background: var(--bg); cursor: pointer; transition: 0.3s; margin-bottom: 32px; }
+        .upload-zone:hover { border-color: var(--primary); background: #eef2ff; tranform: scale(1.01); }
+        .upload-zone i { font-size: 3rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px; }
+
+        /* Social Grid */
+        .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .social-card { background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 28px; transition: 0.3s; }
+        .social-card:hover { border-color: var(--primary); transform: translateY(-4px); }
+        .social-icon { width: 60px; height: 60px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 16px; }
+        .social-icon.instagram { background: var(--gradient-2); color: white; }
+        .social-icon.tiktok { background: var(--dark); color: white; }
+        .social-icon.youtube { background: var(--danger); color: white; }
+
+        /* Campaign Card */
+        .campaign-card { background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 28px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .campaign-card:hover { border-color: var(--primary); transform: translateX(8px); }
     </style>
 </head>
 <body>
 
+    <!-- Mobile Header -->
+    <div class="mobile-header show">
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="mobile-logo"><i class="fa-solid fa-bolt"></i> FluenPay</div>
+        <div style="width: 44px;"></div>
+    </div>
+
+    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="logo"><i class="fa-solid fa-bolt"></i> FluenPay</div>
-        <nav class="nav-section">
-            <div class="nav-label">Creator Area</div>
+        
+        <div class="nav-section">
+            <div class="nav-label">Main</div>
             <ul class="nav-links">
-                <li class="nav-link active" onclick="showPage('dashboard', this)"><i class="fa-solid fa-house"></i> Home Base</li>
-                <li class="nav-link" onclick="showPage('receipts', this)"><i class="fa-solid fa-camera"></i> Snap & Earn</li>
-                <li class="nav-link" onclick="showPage('wallet', this)"><i class="fa-solid fa-coins"></i> The Bag</li>
-                <li class="nav-link" onclick="showPage('analytics', this)"><i class="fa-solid fa-chart-line"></i> The Stats</li>
+                <li class="nav-item"><a class="nav-link active" onclick="showPage('dashboard', this)"><i class="fa-solid fa-house"></i> <span>Home Base</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('receipts', this)"><i class="fa-solid fa-camera"></i> <span>Snap & Earn</span> <span class="badge-new">HOT</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('campaigns', this)"><i class="fa-solid fa-handshake"></i> <span>Collabs</span></a></li>
             </ul>
-        </nav>
-        <div class="card tier-card" style="margin-top: auto; padding: 15px; border-radius: 15px;">
-            <div class="tier-header"><span>Tier: Rising Star</span><span>65%</span></div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-label">Money</div>
+            <ul class="nav-links">
+                <li class="nav-item"><a class="nav-link" onclick="showPage('wallet', this)"><i class="fa-solid fa-coins"></i> <span>The Bag</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('analytics', this)"><i class="fa-solid fa-chart-line"></i> <span>The Stats</span></a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-label">Settings</div>
+            <ul class="nav-links">
+                <li class="nav-item"><a class="nav-link" onclick="showPage('social', this)"><i class="fa-solid fa-share-nodes"></i> <span>Socials</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('kyc', this)"><i class="fa-solid fa-id-badge"></i> <span>Verify Me</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('bank', this)"><i class="fa-solid fa-building-columns"></i> <span>Bank Info</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('profile', this)"><i class="fa-solid fa-sliders"></i> <span>Settings</span></a></li>
+            </ul>
+        </div>
+
+        <!-- Tier Card (The missing Phase 2 link) -->
+        <div class="tier-card">
+            <div class="tier-header"><span>Rising Star</span><span>65%</span></div>
             <div class="progress-bar"><div class="progress-fill"></div></div>
-            <p style="font-size: 0.7rem; color: var(--text-light); margin-top: 8px;">Next: <b>Verified Partner</b> (Fixed Deals unlocked!)</p>
+            <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 8px;">Next: <b>Verified Partner</b> (Fixed Deals unlocked!)</p>
         </div>
     </aside>
 
-    <main class="main-content">
+    <main class="main-content" id="mainContent">
+        
         <header class="header">
             <div class="page-title">
-                <h1 id="view-title">Home Base</h1>
-                <p id="view-sub">Monetize your vibe, secure the bag. 💸</p>
+                <h1 id="page-title">Your Hub</h1>
+                <p id="page-subtitle">Turn daily spends into stacks. Snap receipts, get paid! 💸</p>
             </div>
-            <div class="profile-summary" style="text-align: right;">
-                <div style="font-weight: 800; display: flex; align-items: center; gap: 10px; justify-content: flex-end;">
-                    <div id="niche-badge" style="background: var(--bg); padding: 4px 12px; border-radius: 8px; font-size: 0.75rem;">Fashion & Pop</div>
-                    Ahmed Al-Saud
-                </div>
-                <p style="font-size: 0.8rem; color: var(--text-light);">Influencer ID: #FL-2601</p>
-            </div>
+            <button class="btn btn-primary" onclick="showPage('receipts', document.querySelectorAll('.nav-link')[1])">
+                <i class="fa-solid fa-camera"></i> <span>Snap Now</span>
+            </button>
         </header>
 
-        <!-- DASHBOARD -->
+        <!-- 1. DASHBOARD -->
         <section id="dashboard" class="page-section active">
+            <div class="alert-card">
+                <div class="alert-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="alert-content">
+                    <h4><i class="fa-solid fa-lock"></i> Verify Your Vibe</h4>
+                    <p>Complete KYC to unlock instant ATM withdrawals today! 🔓</p>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="showPage('kyc', document.querySelectorAll('.nav-link')[5])">Verify Now</button>
+            </div>
+
             <div class="stats-grid">
                 <div class="card stat-card">
-                    <h3><i class="fa-solid fa-sack-dollar"></i> Current Stacks</h3>
+                    <h3>Total Stacks</h3>
                     <div class="value">SAR 2,500</div>
-                    <div class="sub-text text-success"><i class="fa-solid fa-arrow-trend-up"></i> 10% Earned today</div>
+                    <div class="sub-text text-success"><i class="fa-solid fa-arrow-trend-up"></i> 10% on every purchase</div>
                 </div>
                 <div class="card stat-card pink">
-                    <h3><i class="fa-solid fa-heart"></i> Genuine Reach</h3>
+                    <h3>Genuine Reach</h3>
                     <div class="value">55.2K</div>
                     <div class="sub-text"><i class="fa-solid fa-check-circle"></i> 92% Authentic Fans</div>
                 </div>
                 <div class="card stat-card green">
-                    <h3><i class="fa-solid fa-shield-check"></i> Trust Score</h3>
+                    <h3>Trust Score</h3>
                     <div class="value">9.8</div>
                     <div class="sub-text text-success">Elite Creator Status</div>
                 </div>
@@ -198,11 +319,33 @@
                 <h3>Select Your Niche 🏷️</h3>
                 <p style="color: var(--text-light); font-size: 0.9rem;">We match deals to your vibe. What do you post?</p>
                 <div class="niche-grid">
-                    <div class="niche-tag active" onclick="toggleNiche(this)">Fashion</div>
-                    <div class="niche-tag" onclick="toggleNiche(this)">Travel</div>
-                    <div class="niche-tag" onclick="toggleNiche(this)">Food & Vibes</div>
-                    <div class="niche-tag" onclick="toggleNiche(this)">Tech & Gadgets</div>
-                    <div class="niche-tag" onclick="toggleNiche(this)">Petrol-Head</div>
+                    <div class="niche-tag active">Fashion</div>
+                    <div class="niche-tag">Travel</div>
+                    <div class="niche-tag">Food & Vibes</div>
+                    <div class="niche-tag">Tech & Gadgets</div>
+                    <div class="niche-tag">Petrol-Head</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Earnings Journey 📊</h3>
+                <div style="height: 300px; position: relative; margin-top: 20px;">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Recent Drops 📸</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Brand</th><th>Spent</th><th>Earned</th><th>Status</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Starbucks</td><td>SAR 45.00</td><td class="text-success">+SAR 4.50</td><td><span class="tag tag-new">Approved</span></td></tr>
+                            <tr><td>Nando's</td><td>SAR 120.00</td><td class="text-success">+SAR 12.00</td><td><span class="tag tag-time">Reviewing</span></td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -215,26 +358,76 @@
             </div>
         </section>
 
-        <!-- WALLET -->
-        <section id="wallet" class="page-section">
-            <div class="wallet-hero">
-                <div class="balance-label">Total Cash Available</div>
-                <div class="balance-value">SAR 2,500.00</div>
-                <div class="withdrawal-methods">
-                    <div class="method-btn"><i class="fa-solid fa-building-columns"></i> Bank Transfer</div>
-                    <div class="method-btn"><i class="fa-solid fa-money-bill-1-wave"></i> ATM Instant Code</div>
+        <!-- 2. RECEIPTS -->
+        <section id="receipts" class="page-section">
+            <div class="card">
+                <h3>Snap It, Tag It, Stack It! 💰</h3>
+                <p style="color: var(--text-light); margin-bottom: 24px;">Upload your receipt, tag us on socials, and secure 10% back! 🔥</p>
+                <div class="upload-zone">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <h4>Drop Your Receipt</h4>
+                    <button class="btn btn-primary btn-sm">Browse Files</button>
                 </div>
+                <div class="form-group"><label>Where Did You Shop? 🛍️</label><input type="text" placeholder="e.g. IKEA, Zara"></div>
+                <div class="form-group"><label>Total Damage (SAR) 💸</label><input type="number" placeholder="0.00"></div>
+                <div class="form-group">
+                    <label>Post Link 📱</label>
+                    <input type="text" placeholder="Instagram/TikTok URL">
+                    <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 8px;">* Must tag @FluenPay and the brand!</p>
+                </div>
+                <button class="btn btn-accent btn-full">Send It! 🚀</button>
             </div>
         </section>
 
-        <section id="analytics" class="page-section">
-            <div class="card">
-                <h3>Audience Vibe Check 📊</h3>
-                <div style="height: 300px; position: relative; margin-top: 20px;">
-                    <canvas id="mainChart"></canvas>
-                </div>
+        <!-- 3. CAMPAIGNS -->
+        <section id="campaigns" class="page-section">
+            <div class="campaign-card">
+                <div><h4>Flash Drop: Tech Gadgets 🎧</h4><p>ElectroKSA • 15% commission</p></div>
+                <button class="btn btn-primary btn-sm">Apply Now</button>
             </div>
         </section>
+
+        <!-- 4. WALLET -->
+        <section id="wallet" class="page-section">
+            <div class="wallet-hero">
+                <div class="balance-label">Total Cash Available</div>
+                <div class="balance">SAR 2,500.00</div>
+                <div class="wallet-actions">
+                    <button class="btn"><i class="fa-solid fa-building-columns"></i> Bank Transfer</button>
+                    <button class="btn"><i class="fa-solid fa-money-bill-1-wave"></i> ATM Instant Code</button>
+                </div>
+            </div>
+            <div class="card"><h3>Money Moves 📉</h3><div class="table-container"><table><thead><tr><th>Source</th><th>Amount</th><th>Date</th></tr></thead><tbody><tr><td>Withdrawal</td><td style="color:var(--danger)">-SAR 1,000</td><td>Mar 20</td></tr></tbody></table></div></div>
+        </section>
+
+        <!-- 5. ANALYTICS -->
+        <section id="analytics" class="page-section">
+            <div class="card"><h3>Audience Engagement 📊</h3><div style="height: 300px; position: relative;"><canvas id="analyticsChart"></canvas></div></div>
+        </section>
+
+        <!-- 6. SOCIALS -->
+        <section id="social" class="page-section">
+            <div class="social-grid">
+                <div class="social-card"><div class="social-icon instagram"><i class="fa-brands fa-instagram"></i></div><h4>Instagram</h4><button class="btn btn-outline btn-full btn-sm">Connect IG</button></div>
+                <div class="social-card"><div class="social-icon tiktok"><i class="fa-brands fa-tiktok"></i></div><h4>TikTok</h4><button class="btn btn-outline btn-full btn-sm">Connect TikTok</button></div>
+            </div>
+        </section>
+
+        <!-- 7. KYC -->
+        <section id="kyc" class="page-section">
+            <div class="card"><h3>Verify Your Identity 🔐</h3><div class="form-group"><label>National ID 🇸🇦</label><input type="text" placeholder="10xxxxxxxxx"></div><button class="btn btn-primary btn-full">Submit for Verification</button></div>
+        </section>
+
+        <!-- 8. BANK -->
+        <section id="bank" class="page-section">
+            <div class="card"><h3>Bank Info 🏦</h3><div class="form-group"><label>IBAN (Saudi Arabia) 🇸🇦</label><input type="text" placeholder="SAxxxxxxxx"></div><button class="btn btn-accent btn-full">Save Details</button></div>
+        </section>
+
+        <!-- 9. PROFILE -->
+        <section id="profile" class="page-section">
+            <div class="card"><h3>Profile Settings ⚙️</h3><div class="form-group"><label>Name</label><input type="text" value="Ahmed Al-Saud"></div><button class="btn btn-primary">Update Profile</button></div>
+        </section>
+
     </main>
 
     <script>
@@ -242,36 +435,39 @@
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            el.classList.add('active');
-            const viewTitles = {
-                'dashboard': ['Home Base', 'Monetize your vibe, secure the bag. 💸'],
-                'receipts': ['Snap & Earn', 'Drop your receipts, tag brands, get stacks. 📸'],
-                'wallet': ['The Bag', 'Your money, your rules. Instant ATM withdrawal. 🏦'],
-                'analytics': ['The Stats', 'Peep your reach and audience health. 📊']
+            if(el) el.classList.add('active');
+            
+            const titles = {
+                'dashboard': ['Home Base', 'Turn daily spends into stacks. Snap receipts, get paid! 💸'],
+                'receipts': ['Snap & Earn', 'Drop receipts, tag us, secure the bag! 🔥'],
+                'campaigns': ['Collabs', 'Partner with brands and level up 🚀'],
+                'wallet': ['The Bag', 'Your money, your rules. 🏦'],
+                'analytics': ['The Stats', 'Peep your performance 📊'],
+                'social': ['Socials', 'Connect your audience 🔗'],
+                'kyc': ['Verify Me', 'Unlock instant withdrawals 🔐'],
+                'bank': ['Bank Info', 'Where the money flows 🏦'],
+                'profile': ['Settings', 'Manage your vibe ⚙️']
             };
-            document.getElementById('view-title').innerText = viewTitles[pageId][0];
-            document.getElementById('view-sub').innerText = viewTitles[pageId][1];
+            document.getElementById('page-title').innerText = titles[pageId][0];
+            document.getElementById('page-subtitle').innerText = titles[pageId][1];
+            if (window.innerWidth <= 768) toggleSidebar();
         }
-        function toggleNiche(el) {
-            el.classList.toggle('active');
-            document.getElementById('niche-badge').innerText = el.innerText;
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.querySelector('.mobile-overlay').classList.toggle('active');
         }
+
         window.onload = function() {
-            const ctx = document.getElementById('mainChart').getContext('2d');
-            new Chart(ctx, {
+            const ctxRev = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctxRev, {
                 type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                    datasets: [{
-                        label: 'Genuine Reach',
-                        data: [12000, 19000, 15000, 25000, 55000],
-                        borderColor: '#6366f1',
-                        tension: 0.4,
-                        fill: true,
-                        backgroundColor: 'rgba(99, 102, 241, 0.1)'
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
+                data: { labels: ['Jan', 'Feb', 'Mar'], datasets: [{ label: 'SAR', data: [1500, 2200, 2500], borderColor: '#6366f1', fill: true, backgroundColor: 'rgba(99,102,241,0.1)' }] }
+            });
+            const ctxAna = document.getElementById('analyticsChart').getContext('2d');
+            new Chart(ctxAna, {
+                type: 'bar',
+                data: { labels: ['IG', 'TikTok'], datasets: [{ label: 'Engagement', data: [8.5, 12.0], backgroundColor: ['#ec4899', '#0f172a'] }] }
             });
         };
     </script>
