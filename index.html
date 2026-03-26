@@ -28,447 +28,247 @@
             --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; display: flex; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        /* ----- AUTH ----- */
+        #auth-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; transition: 0.5s; }
+        .auth-card { background: var(--card); border-radius: 32px; padding: 48px; width: 100%; max-width: 480px; border: 2px solid var(--border); text-align: center; }
 
-        body {
-            background: var(--bg);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-            color: var(--text);
-            position: relative;
-        }
+        /* ----- TOUR GUIDE (ONBOARDING) ----- */
+        #tour-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); z-index: 5000; display: none; }
+        .tour-step { background: var(--card); border-radius: 20px; padding: 24px; width: 300px; position: absolute; border: 2px solid var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.2); animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .tour-button { padding: 8px 16px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; font-size: 0.8rem; background: var(--primary); color: white; margin-top: 12px; }
 
-        /* Mobile Overlay */
-        .mobile-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 998;
-            transition: opacity 0.3s;
-        }
+        /* ----- MODAL SYSTEM ----- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 3000; opacity: 0; transition: 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-card { background: var(--card); border-radius: 24px; padding: 32px; width: 100%; max-width: 400px; text-align: center; border: 2px solid var(--border); }
 
-        .mobile-overlay.active {
-            display: block; opacity: 1;
-        }
+        /* ----- TOASTS ----- */
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 4000; }
+        .toast { background: var(--dark); color: white; padding: 12px 24px; border-radius: 12px; margin-bottom: 10px; font-weight: 700; display: flex; align-items: center; gap: 12px; animation: slideInRight 0.4s forwards; }
+        @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
-        /* Mobile Header */
-        .mobile-header {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: var(--card);
-            border-bottom: 2px solid var(--border);
-            padding: 12px 16px;
-            z-index: 1000;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+        /* ----- APP ----- */
+        #app-wrapper { display: none; width: 100%; height: 100%; }
+        .sidebar { width: 280px; background: var(--card); border-right: 2px solid var(--border); display: flex; flex-direction: column; padding: 20px 28px; position: fixed; height: 100vh; z-index: 999; }
+        .main-content { flex-grow: 1; overflow-y: auto; padding: 40px; margin-left: 280px; padding-top: 80px; }
 
-        .mobile-header.show { display: flex; }
+        .nav-link { display: flex; align-items: center; gap: 14px; padding: 14px 16px; color: var(--text-light); border-radius: 16px; cursor: pointer; font-weight: 600; text-decoration: none; border: 2px solid transparent; transition: 0.3s; margin-bottom: 4px; }
+        .nav-link.active { background: var(--primary); color: white; }
 
-        .menu-toggle {
-            background: none; border: none; font-size: 1.4rem; color: var(--text); cursor: pointer; padding: 8px; border-radius: 10px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;
-        }
-
-        .mobile-logo { font-size: 1.3rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        /* Sidebar - Glassmorphism */
-        .sidebar {
-            width: 280px;
-            background: var(--card);
-            border-right: 2px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            padding: 28px;
-            overflow-y: auto;
-            position: fixed;
-            left: 0; top: 0; height: 100vh;
-            z-index: 999;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .sidebar.closed { transform: translateX(-100%); }
-
-        .logo { font-size: 1.8rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
-
-        .nav-section { margin-bottom: 24px; }
-        .nav-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-light); letter-spacing: 0.05em; margin-bottom: 12px; padding-left: 16px; }
-        .nav-links { list-style: none; }
-        .nav-item { margin-bottom: 4px; }
-        .nav-link { display: flex; align-items: center; gap: 14px; padding: 14px 16px; color: var(--text-light); text-decoration: none; border-radius: 16px; transition: all 0.3s; cursor: pointer; font-weight: 600; border: 2px solid transparent; position: relative; }
-        .nav-link:hover { background: var(--bg); color: var(--primary); transform: translateX(4px); }
-        .nav-link.active { background: var(--primary); color: white; border-color: var(--primary-light); }
-        .badge-new { background: var(--gradient-2); color: white; font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: auto; }
-
-        /* Tier Tacker in Sidebar */
-        .tier-card { padding: 16px; background: var(--bg); border-radius: 16px; margin-top: auto; border: 2px solid var(--border); }
-        .tier-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.8rem; }
-        .progress-bar { height: 8px; background: var(--border); border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--gradient-1); width: 65%; border-radius: 10px; }
-
-        /* Main Content */
-        .main-content {
-            flex-grow: 1; overflow-y: auto; padding: 40px; margin-left: 280px; transition: margin-left 0.3s; padding-top: 80px;
-        }
-
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
-        .page-title h1 { font-size: 2rem; font-weight: 800; color: var(--dark); background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .page-title p { color: var(--text-light); font-size: 1rem; margin-top: 8px; font-weight: 500; }
-
-        /* Buttons */
-        .btn { padding: 14px 28px; border-radius: 16px; border: none; cursor: pointer; font-weight: 700; font-size: 0.95rem; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; min-height: 48px; }
+        .card { background: var(--card); border-radius: 24px; padding: 28px; border: 2px solid var(--border); margin-bottom: 24px; }
+        .btn { padding: 14px 28px; border-radius: 16px; font-weight: 700; cursor: pointer; border: none; transition: 0.3s; text-align: center; }
         .btn-primary { background: var(--gradient-1); color: white; }
-        .btn-accent { background: var(--gradient-4); color: white; }
-        .btn-secondary { background: var(--gradient-2); color: white; }
-        .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
-        .btn-sm { padding: 10px 20px; font-size: 0.875rem; min-height: 40px; }
-        .btn-full { width: 100%; }
+        .loader { width: 44px; height: 44px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Page Layouts */
-        .page-section { display: none; }
-        .page-section.active { display: block; animation: slideUp 0.5s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Stats Grid */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-bottom: 32px; }
-        .card { background: var(--card); border-radius: 24px; padding: 28px; border: 2px solid var(--border); margin-bottom: 24px; transition: 0.3s; }
-        .card:hover { border-color: var(--primary-light); }
-        
-        .stat-card { position: relative; overflow: hidden; }
-        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-1); }
-        .stat-card.pink::before { background: var(--gradient-2); }
-        .stat-card.green::before { background: var(--gradient-4); }
-        .stat-card h3 { color: var(--text-light); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
-        .stat-card .value { font-size: 2.2rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
-        .sub-text { font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-        .text-success { color: var(--accent); }
-        .text-warning { color: var(--warning); }
-
-        /* Niche Grid */
-        .niche-grid { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-        .niche-tag { padding: 10px 20px; border-radius: 12px; border: 2px solid var(--border); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .niche-tag.active { border-color: var(--primary); background: #eef2ff; color: var(--primary); }
-
-        /* Alert Card */
-        .alert-card { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #fbbf24; border-radius: 24px; padding: 24px; margin-bottom: 32px; display: flex; align-items: center; gap: 20px; }
-        .alert-icon { width: 56px; height: 56px; background: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--warning); }
-
-        /* Merchant CTA */
-        .merchant-cta { background: var(--dark); color: white; padding: 32px; border-radius: 24px; margin-top: 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-        .merchant-cta h3 { font-size: 1.5rem; margin-bottom: 8px; }
-        .btn-white { background: white; color: var(--dark); padding: 12px 24px; border-radius: 12px; font-weight: 800; text-decoration: none; }
-
-        /* Wallet Hero */
-        .wallet-hero { background: var(--gradient-1); border-radius: 32px; padding: 40px; color: white; margin-bottom: 32px; position: relative; overflow: hidden; }
-        .wallet-hero .balance { font-size: 3.5rem; font-weight: 800; margin-bottom: 24px; }
-        .wallet-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
-        .wallet-actions .btn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); color: white; }
-
-        /* Responsive Settings */
-        @media (max-width: 768px) {
-            .mobile-header.show { display: flex; }
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 80px 16px; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .wallet-hero .balance { font-size: 2.2rem; }
-        }
-
-        /* Forms */
-        .form-group { margin-bottom: 24px; }
-        .form-group label { display: block; margin-bottom: 10px; font-weight: 700; color: var(--dark); }
-        .form-group input, .form-group select { width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: 16px; font-size: 1rem; transition: 0.3s; }
-        .form-group input:focus { outline: none; border-color: var(--primary); background: #eef2ff; }
-        
-        /* Table Styles */
-        .table-container { overflow-x: auto; border: 2px solid var(--border); border-radius: 16px; margin-top: 12px; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th { text-align: left; padding: 16px; color: var(--text-light); font-size: 0.8rem; border-bottom: 2px solid var(--border); }
-        td { padding: 18px 16px; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
-
-        /* Tags */
-        .tag { padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
-        .tag-new { background: #d1fae5; color: var(--accent); }
-        .tag-time { background: #fef3c7; color: var(--warning); }
-        .tag-hot { background: #fee2e2; color: var(--danger); }
-
-        /* Upload Zone */
-        .upload-zone { border: 3px dashed var(--border); border-radius: 24px; padding: 48px; text-align: center; background: var(--bg); cursor: pointer; transition: 0.3s; margin-bottom: 32px; }
-        .upload-zone:hover { border-color: var(--primary); background: #eef2ff; tranform: scale(1.01); }
-        .upload-zone i { font-size: 3rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px; }
-
-        /* Social Grid */
-        .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .social-card { background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 28px; transition: 0.3s; }
-        .social-card:hover { border-color: var(--primary); transform: translateY(-4px); }
-        .social-icon { width: 60px; height: 60px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 16px; }
-        .social-icon.instagram { background: var(--gradient-2); color: white; }
-        .social-icon.tiktok { background: var(--dark); color: white; }
-        .social-icon.youtube { background: var(--danger); color: white; }
-
-        /* Campaign Card */
-        .campaign-card { background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 28px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-        .campaign-card:hover { border-color: var(--primary); transform: translateX(8px); }
+        /* Validation Colors */
+        .invalid-input { border-color: var(--danger) !important; background: #fff1f2 !important; }
     </style>
 </head>
 <body>
 
-    <!-- Mobile Header -->
-    <div class="mobile-header show">
-        <button class="menu-toggle" onclick="toggleSidebar()">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <div class="mobile-logo"><i class="fa-solid fa-bolt"></i> FluenPay</div>
-        <div style="width: 44px;"></div>
+    <!-- ----- ONBOARDING OVERLAY ----- -->
+    <div id="tour-overlay"></div>
+
+    <!-- ----- NOTIFICATIONS ----- -->
+    <div id="toast-container"></div>
+
+    <!-- ----- MODALS ----- -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-card">
+            <div id="modal-content"></div>
+        </div>
     </div>
 
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <div class="logo"><i class="fa-solid fa-bolt"></i> FluenPay</div>
-        
-        <div class="nav-section">
-            <div class="nav-label">Main</div>
-            <ul class="nav-links">
-                <li class="nav-item"><a class="nav-link active" onclick="showPage('dashboard', this)"><i class="fa-solid fa-house"></i> <span>Home Base</span></a></li>
-                <li class="nav-item"><a class="nav-link" onclick="showPage('receipts', this)"><i class="fa-solid fa-camera"></i> <span>Snap & Earn</span> <span class="badge-new">HOT</span></a></li>
-                <li class="nav-item"><a class="nav-link" onclick="showPage('campaigns', this)"><i class="fa-solid fa-handshake"></i> <span>Collabs</span></a></li>
-            </ul>
+    <!-- ----- LOGIN ----- -->
+    <div id="auth-container">
+        <div class="auth-card">
+            <div style="font-size: 2.5rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 24px;"><i class="fa-solid fa-bolt"></i> FluenPay</div>
+            <h2 style="margin-bottom: 32px;">Start Your Creator Journey</h2>
+            <div style="text-align:left; margin-bottom:20px;">
+                <label>Name</label>
+                <input type="text" id="user-name-input" placeholder="Ahmed" style="width:100%; padding:14px; border-radius:12px; border:2px solid var(--border); margin-top:8px;">
+            </div>
+            <button class="btn btn-primary" style="width:100%" onclick="handleAuth()">Enter Creator Hub</button>
         </div>
+    </div>
 
-        <div class="nav-section">
-            <div class="nav-label">Money</div>
-            <ul class="nav-links">
-                <li class="nav-item"><a class="nav-link" onclick="showPage('wallet', this)"><i class="fa-solid fa-coins"></i> <span>The Bag</span></a></li>
-                <li class="nav-item"><a class="nav-link" onclick="showPage('analytics', this)"><i class="fa-solid fa-chart-line"></i> <span>The Stats</span></a></li>
-            </ul>
-        </div>
+    <!-- ----- APP ----- -->
+    <div id="app-wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div style="font-size: 1.8rem; font-weight:800; background:var(--gradient-1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom: 40px;"><i class="fa-solid fa-bolt"></i> FluenPay</div>
+            <nav id="tour-step-1">
+                <div class="nav-link active" onclick="showPage('dashboard', this)"><i class="fa-solid fa-house"></i> Dashboard</div>
+                <div class="nav-link" id="tour-step-2" onclick="showPage('receipts', this)"><i class="fa-solid fa-camera"></i> Snap Receipt</div>
+                <div class="nav-link" id="tour-step-3" onclick="showPage('wallet', this)"><i class="fa-solid fa-coins"></i> Wallet</div>
+            </nav>
+        </aside>
 
-        <div class="nav-section">
-            <div class="nav-label">Settings</div>
-            <ul class="nav-links">
-                <li class="nav-item"><a class="nav-link" onclick="showPage('social', this)"><i class="fa-solid fa-share-nodes"></i> <span>Socials</span></a></li>
-                <li class="nav-item"><a class="nav-link" onclick="showPage('kyc', this)"><i class="fa-solid fa-id-badge"></i> <span>Verify Me</span></a></li>
-                <li class="nav-item"><a class="nav-link" onclick="showPage('bank', this)"><i class="fa-solid fa-building-columns"></i> <span>Bank Info</span></a></li>
-                <li class="nav-item"><a class="nav-link" onclick="showPage('profile', this)"><i class="fa-solid fa-sliders"></i> <span>Settings</span></a></li>
-            </ul>
-        </div>
+        <main class="main-content">
+            <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+                <h1 id="page-title" style="font-size: 2rem;">Dashboard</h1>
+                <div id="user-welcome" style="font-weight: 800; opacity: 0.8;">Salim Ahmed</div>
+            </header>
 
-        <!-- Tier Card (The missing Phase 2 link) -->
-        <div class="tier-card">
-            <div class="tier-header"><span>Rising Star</span><span>65%</span></div>
-            <div class="progress-bar"><div class="progress-fill"></div></div>
-            <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 8px;">Next: <b>Verified Partner</b> (Fixed Deals unlocked!)</p>
-        </div>
-    </aside>
-
-    <main class="main-content" id="mainContent">
-        
-        <header class="header">
-            <div class="page-title">
-                <h1 id="page-title">Your Hub</h1>
-                <p id="page-subtitle">Turn daily spends into stacks. Snap receipts, get paid! 💸</p>
-            </div>
-            <button class="btn btn-primary" onclick="showPage('receipts', document.querySelectorAll('.nav-link')[1])">
-                <i class="fa-solid fa-camera"></i> <span>Snap Now</span>
-            </button>
-        </header>
-
-        <!-- 1. DASHBOARD -->
-        <section id="dashboard" class="page-section active">
-            <div class="alert-card">
-                <div class="alert-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                <div class="alert-content">
-                    <h4><i class="fa-solid fa-lock"></i> Verify Your Vibe</h4>
-                    <p>Complete KYC to unlock instant ATM withdrawals today! 🔓</p>
+            <section id="dashboard" class="page-section active">
+                <div class="card" style="background:var(--gradient-1); color:white;">
+                    <h2>Status: Rising Star 🌟</h2>
+                    <p style="opacity:0.9;">Secure SAR 500 more to unlock Verified status.</p>
                 </div>
-                <button class="btn btn-secondary btn-sm" onclick="showPage('kyc', document.querySelectorAll('.nav-link')[5])">Verify Now</button>
-            </div>
-
-            <div class="stats-grid">
-                <div class="card stat-card">
-                    <h3>Total Stacks</h3>
-                    <div class="value">SAR 2,500</div>
-                    <div class="sub-text text-success"><i class="fa-solid fa-arrow-trend-up"></i> 10% on every purchase</div>
+                <div class="card">
+                    <h3>Your Niche</h3>
+                    <div style="display:flex; gap:10px; margin-top:12px;">
+                        <span class="btn btn-primary" style="padding:10px 20px;">Fashion</span>
+                        <span class="btn" style="padding:10px 20px; background:var(--bg);">Tech</span>
+                    </div>
                 </div>
-                <div class="card stat-card pink">
-                    <h3>Genuine Reach</h3>
-                    <div class="value">55.2K</div>
-                    <div class="sub-text"><i class="fa-solid fa-check-circle"></i> 92% Authentic Fans</div>
+            </section>
+
+            <section id="receipts" class="page-section">
+                <div class="card">
+                    <h3>Snap & Earn 📸</h3>
+                    <div style="margin-top:20px;">
+                        <div style="margin-bottom:15px;">
+                            <label style="font-weight:700;">Post Link (IG/TikTok)</label>
+                            <input type="text" id="post-url" placeholder="https://instagram.com/p/..." onblur="validateURL(this)" style="width:100%; padding:14px; border-radius:12px; border:2px solid var(--border); margin-top:8px;">
+                        </div>
+                        <button class="btn btn-primary" onclick="submitReceipt()">Secure My 10%</button>
+                    </div>
                 </div>
-                <div class="card stat-card green">
-                    <h3>Trust Score</h3>
-                    <div class="value">9.8</div>
-                    <div class="sub-text text-success">Elite Creator Status</div>
+            </section>
+
+            <section id="wallet" class="page-section">
+                <div class="card">
+                    <h2 style="font-size: 2.5rem; margin-bottom:20px;">SAR 2,500.00</h2>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                        <button class="btn" style="background:var(--bg); border: 2px solid var(--border);" onclick="payoutFlow()">Bank Payout</button>
+                        <button class="btn" id="tour-step-4" style="background:var(--bg); border: 2px solid var(--border);" onclick="payoutFlow()">ATM Code</button>
+                    </div>
+                    <div style="margin-top:24px;">
+                        <label style="font-weight:700;">Your IBAN (For Payouts)</label>
+                        <input type="text" id="iban-input" placeholder="SA..." onblur="validateIBAN(this)" style="width:100%; padding:14px; border-radius:12px; border:2px solid var(--border); margin-top:8px;">
+                    </div>
                 </div>
-            </div>
-
-            <div class="card">
-                <h3>Select Your Niche 🏷️</h3>
-                <p style="color: var(--text-light); font-size: 0.9rem;">We match deals to your vibe. What do you post?</p>
-                <div class="niche-grid">
-                    <div class="niche-tag active">Fashion</div>
-                    <div class="niche-tag">Travel</div>
-                    <div class="niche-tag">Food & Vibes</div>
-                    <div class="niche-tag">Tech & Gadgets</div>
-                    <div class="niche-tag">Petrol-Head</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>Earnings Journey 📊</h3>
-                <div style="height: 300px; position: relative; margin-top: 20px;">
-                    <canvas id="revenueChart"></canvas>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>Recent Drops 📸</h3>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr><th>Brand</th><th>Spent</th><th>Earned</th><th>Status</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Starbucks</td><td>SAR 45.00</td><td class="text-success">+SAR 4.50</td><td><span class="tag tag-new">Approved</span></td></tr>
-                            <tr><td>Nando's</td><td>SAR 120.00</td><td class="text-success">+SAR 12.00</td><td><span class="tag tag-time">Reviewing</span></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="merchant-cta">
-                <div>
-                    <h3>Own a Brand? 🚀</h3>
-                    <p>Drive sales via authentic creators. Pay only when people shop.</p>
-                </div>
-                <a href="#" class="btn-white">Join as Merchant</a>
-            </div>
-        </section>
-
-        <!-- 2. RECEIPTS -->
-        <section id="receipts" class="page-section">
-            <div class="card">
-                <h3>Snap It, Tag It, Stack It! 💰</h3>
-                <p style="color: var(--text-light); margin-bottom: 24px;">Upload your receipt, tag us on socials, and secure 10% back! 🔥</p>
-                <div class="upload-zone">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <h4>Drop Your Receipt</h4>
-                    <button class="btn btn-primary btn-sm">Browse Files</button>
-                </div>
-                <div class="form-group"><label>Where Did You Shop? 🛍️</label><input type="text" placeholder="e.g. IKEA, Zara"></div>
-                <div class="form-group"><label>Total Damage (SAR) 💸</label><input type="number" placeholder="0.00"></div>
-                <div class="form-group">
-                    <label>Post Link 📱</label>
-                    <input type="text" placeholder="Instagram/TikTok URL">
-                    <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 8px;">* Must tag @FluenPay and the brand!</p>
-                </div>
-                <button class="btn btn-accent btn-full">Send It! 🚀</button>
-            </div>
-        </section>
-
-        <!-- 3. CAMPAIGNS -->
-        <section id="campaigns" class="page-section">
-            <div class="campaign-card">
-                <div><h4>Flash Drop: Tech Gadgets 🎧</h4><p>ElectroKSA • 15% commission</p></div>
-                <button class="btn btn-primary btn-sm">Apply Now</button>
-            </div>
-        </section>
-
-        <!-- 4. WALLET -->
-        <section id="wallet" class="page-section">
-            <div class="wallet-hero">
-                <div class="balance-label">Total Cash Available</div>
-                <div class="balance">SAR 2,500.00</div>
-                <div class="wallet-actions">
-                    <button class="btn"><i class="fa-solid fa-building-columns"></i> Bank Transfer</button>
-                    <button class="btn"><i class="fa-solid fa-money-bill-1-wave"></i> ATM Instant Code</button>
-                </div>
-            </div>
-            <div class="card"><h3>Money Moves 📉</h3><div class="table-container"><table><thead><tr><th>Source</th><th>Amount</th><th>Date</th></tr></thead><tbody><tr><td>Withdrawal</td><td style="color:var(--danger)">-SAR 1,000</td><td>Mar 20</td></tr></tbody></table></div></div>
-        </section>
-
-        <!-- 5. ANALYTICS -->
-        <section id="analytics" class="page-section">
-            <div class="card"><h3>Audience Engagement 📊</h3><div style="height: 300px; position: relative;"><canvas id="analyticsChart"></canvas></div></div>
-        </section>
-
-        <!-- 6. SOCIALS -->
-        <section id="social" class="page-section">
-            <div class="social-grid">
-                <div class="social-card"><div class="social-icon instagram"><i class="fa-brands fa-instagram"></i></div><h4>Instagram</h4><button class="btn btn-outline btn-full btn-sm">Connect IG</button></div>
-                <div class="social-card"><div class="social-icon tiktok"><i class="fa-brands fa-tiktok"></i></div><h4>TikTok</h4><button class="btn btn-outline btn-full btn-sm">Connect TikTok</button></div>
-            </div>
-        </section>
-
-        <!-- 7. KYC -->
-        <section id="kyc" class="page-section">
-            <div class="card"><h3>Verify Your Identity 🔐</h3><div class="form-group"><label>National ID 🇸🇦</label><input type="text" placeholder="10xxxxxxxxx"></div><button class="btn btn-primary btn-full">Submit for Verification</button></div>
-        </section>
-
-        <!-- 8. BANK -->
-        <section id="bank" class="page-section">
-            <div class="card"><h3>Bank Info 🏦</h3><div class="form-group"><label>IBAN (Saudi Arabia) 🇸🇦</label><input type="text" placeholder="SAxxxxxxxx"></div><button class="btn btn-accent btn-full">Save Details</button></div>
-        </section>
-
-        <!-- 9. PROFILE -->
-        <section id="profile" class="page-section">
-            <div class="card"><h3>Profile Settings ⚙️</h3><div class="form-group"><label>Name</label><input type="text" value="Ahmed Al-Saud"></div><button class="btn btn-primary">Update Profile</button></div>
-        </section>
-
-    </main>
+            </section>
+        </main>
+    </div>
 
     <script>
+        // --- DATA PERSISTENCE ---
+        let userData = JSON.parse(localStorage.getItem('fluenpay_user')) || { name: 'Creator', seenTour: false };
+
+        function handleAuth() {
+            const name = document.getElementById('user-name-input').value || 'Ahmed';
+            userData.name = name;
+            localStorage.setItem('fluenpay_user', JSON.stringify(userData));
+            
+            document.getElementById('auth-container').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('app-wrapper').style.display = 'flex';
+                document.getElementById('user-welcome').innerText = `Hello, ${userData.name}!`;
+                if (!userData.seenTour) startTour();
+            }, 500);
+        }
+
+        // --- TOUR GUIDE ---
+        let currentTourStep = 0;
+        const steps = [
+            { id: 'tour-step-1', text: "Welcome! This is your navigation hub. Move between home and work here." },
+            { id: 'tour-step-2', text: "This is the most important part! Upload your receipts here to get paid." },
+            { id: 'tour-step-3', text: "Keep an eye on 'The Bag'. This is where your money stacks up." },
+            { id: 'tour-step-4', text: "Ready for cash? Generate instant codes to withdraw from any ATM!" }
+        ];
+
+        function startTour() {
+            document.getElementById('tour-overlay').style.display = 'block';
+            nextTourStep();
+        }
+
+        function nextTourStep() {
+            if (currentTourStep >= steps.length) {
+                document.getElementById('tour-overlay').style.display = 'none';
+                userData.seenTour = true;
+                localStorage.setItem('fluenpay_user', JSON.stringify(userData));
+                showToast('Onboarding Complete! Time to earn. 💸');
+                return;
+            }
+
+            const step = steps[currentTourStep];
+            const el = document.getElementById(step.id);
+            const rect = el.getBoundingClientRect();
+
+            document.getElementById('tour-overlay').innerHTML = `
+                <div class="tour-step" style="top: ${rect.bottom + 15}px; left: ${rect.left}px;">
+                    <p style="font-weight:600;">Step ${currentTourStep + 1} of 4</p>
+                    <p style="margin-top:8px; color:var(--text-light);">${step.text}</p>
+                    <button class="tour-button" onclick="nextTourStep()">Next Step &rarr;</button>
+                </div>
+            `;
+            currentTourStep++;
+        }
+
+        // --- VALIDATION ---
+        function validateURL(el) {
+            const val = el.value.toLowerCase();
+            if (val && !val.includes('instagram.com') && !val.includes('tiktok.com')) {
+                el.classList.add('invalid-input');
+                showToast('⚠️ Must be an Instagram or TikTok link!');
+            } else {
+                el.classList.remove('invalid-input');
+            }
+        }
+
+        function validateIBAN(el) {
+            const val = el.value.toUpperCase();
+            if (val && (!val.startsWith('SA') || val.length !== 24)) {
+                el.classList.add('invalid-input');
+                showToast('⚠️ Invalid IBAN. Must start with SA and be 24 digits.');
+            } else {
+                el.classList.remove('invalid-input');
+                userData.iban = val;
+                localStorage.setItem('fluenpay_user', JSON.stringify(userData));
+            }
+        }
+
+        // --- UTILS ---
         function showPage(pageId, el) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             if(el) el.classList.add('active');
-            
-            const titles = {
-                'dashboard': ['Home Base', 'Turn daily spends into stacks. Snap receipts, get paid! 💸'],
-                'receipts': ['Snap & Earn', 'Drop receipts, tag us, secure the bag! 🔥'],
-                'campaigns': ['Collabs', 'Partner with brands and level up 🚀'],
-                'wallet': ['The Bag', 'Your money, your rules. 🏦'],
-                'analytics': ['The Stats', 'Peep your performance 📊'],
-                'social': ['Socials', 'Connect your audience 🔗'],
-                'kyc': ['Verify Me', 'Unlock instant withdrawals 🔐'],
-                'bank': ['Bank Info', 'Where the money flows 🏦'],
-                'profile': ['Settings', 'Manage your vibe ⚙️']
-            };
-            document.getElementById('page-title').innerText = titles[pageId][0];
-            document.getElementById('page-subtitle').innerText = titles[pageId][1];
-            if (window.innerWidth <= 768) toggleSidebar();
+            document.getElementById('page-title').innerText = pageId.charAt(0).toUpperCase() + pageId.slice(1);
         }
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.querySelector('.mobile-overlay').classList.toggle('active');
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.className = 'toast';
+            t.innerHTML = `<i class="fa-solid fa-bell"></i> ${msg}`;
+            document.getElementById('toast-container').appendChild(t);
+            setTimeout(() => t.remove(), 3000);
         }
 
-        window.onload = function() {
-            const ctxRev = document.getElementById('revenueChart').getContext('2d');
-            new Chart(ctxRev, {
-                type: 'line',
-                data: { labels: ['Jan', 'Feb', 'Mar'], datasets: [{ label: 'SAR', data: [1500, 2200, 2500], borderColor: '#6366f1', fill: true, backgroundColor: 'rgba(99,102,241,0.1)' }] }
-            });
-            const ctxAna = document.getElementById('analyticsChart').getContext('2d');
-            new Chart(ctxAna, {
-                type: 'bar',
-                data: { labels: ['IG', 'TikTok'], datasets: [{ label: 'Engagement', data: [8.5, 12.0], backgroundColor: ['#ec4899', '#0f172a'] }] }
-            });
+        function payoutFlow() {
+            showToast('Processing Payout Strategy...');
+        }
+
+        function submitReceipt() {
+            showToast('Receipt Submitted! Verification in progress.');
+        }
+
+        window.onload = () => {
+             const saved = localStorage.getItem('fluenpay_user');
+             if (saved) {
+                const data = JSON.parse(saved);
+                if (data.name !== 'Creator') {
+                    // Pre-fill login
+                    document.getElementById('user-name-input').value = data.name;
+                }
+             }
         };
     </script>
 </body>
