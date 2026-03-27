@@ -1,0 +1,3717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FluenPay - Creator Hub</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+--primary: #6366f1;
+--primary-light: #818cf8;
+--secondary: #ec4899;
+--accent: #10b981;
+--warning: #f59e0b;
+--danger: #ef4444;
+--dark: #0f172a;
+--text: #1e293b;
+--text-light: #64748b;
+--bg: #f8fafc;
+--card: #ffffff;
+--border: #e2e8f0;
+--gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+--gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+--gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+--gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+--gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+--shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+--sidebar-width: 280px;
+--sidebar-collapsed-width: 80px;
+}
+body.dark-mode {
+--dark: #f8fafc;
+--text: #f1f5f9;
+--text-light: #94a3b8;
+--bg: #0f172a;
+--card: #1e293b;
+--border: #334155;
+--shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: 'Plus Jakarta Sans', sans-serif;
+-webkit-tap-highlight-color: transparent;
+}
+html {
+scroll-behavior: smooth;
+font-size: 16px;
+}
+body {
+background: var(--bg);
+display: flex;
+height: 100vh;
+overflow: hidden;
+color: var(--text);
+position: relative;
+transition: background 0.3s, color 0.3s;
+}
+/* ==================== AUTH PAGES ==================== */
+.auth-container {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: var(--bg);
+z-index: 10000;
+overflow-y: auto;
+}
+.auth-container.active {
+display: flex;
+}
+.auth-wrapper {
+width: 100%;
+max-width: 1200px;
+margin: auto;
+display: grid;
+grid-template-columns: 1fr 1fr;
+min-height: 100vh;
+}
+.auth-left {
+background: var(--gradient-1);
+padding: 60px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+position: relative;
+overflow: hidden;
+}
+.auth-left::before {
+content: '';
+position: absolute;
+top: -200px;
+right: -200px;
+width: 500px;
+height: 500px;
+background: rgba(255,255,255,0.1);
+border-radius: 50%;
+}
+.auth-left::after {
+content: '';
+position: absolute;
+bottom: -150px;
+left: -150px;
+width: 400px;
+height: 400px;
+background: rgba(255,255,255,0.05);
+border-radius: 50%;
+}
+.auth-left-content {
+position: relative;
+z-index: 1;
+color: white;
+}
+.auth-left h1 {
+font-size: 3rem;
+font-weight: 800;
+margin-bottom: 24px;
+line-height: 1.2;
+}
+.auth-left p {
+font-size: 1.1rem;
+opacity: 0.9;
+margin-bottom: 40px;
+}
+.auth-features {
+list-style: none;
+}
+.auth-features li {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-bottom: 16px;
+font-size: 1rem;
+}
+.auth-features i {
+width: 40px;
+height: 40px;
+background: rgba(255,255,255,0.2);
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.auth-right {
+padding: 60px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+background: var(--card);
+}
+.auth-logo {
+font-size: 2rem;
+font-weight: 800;
+background: var(--gradient-1);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+margin-bottom: 40px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.auth-logo i {
+-webkit-text-fill-color: var(--primary);
+}
+.auth-title {
+font-size: 2rem;
+font-weight: 800;
+color: var(--dark);
+margin-bottom: 12px;
+}
+.auth-subtitle {
+color: var(--text-light);
+margin-bottom: 32px;
+font-size: 1rem;
+}
+.auth-form {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+.auth-input-group {
+position: relative;
+}
+.auth-input-group label {
+display: block;
+margin-bottom: 8px;
+font-weight: 600;
+color: var(--text);
+font-size: 0.9rem;
+}
+.auth-input-group input {
+width: 100%;
+padding: 16px 16px 16px 50px;
+border: 2px solid var(--border);
+border-radius: 16px;
+font-size: 1rem;
+transition: all 0.3s;
+background: var(--bg);
+color: var(--text);
+}
+.auth-input-group input:focus {
+outline: none;
+border-color: var(--primary);
+background: var(--card);
+}
+.auth-input-group i {
+position: absolute;
+left: 18px;
+top: 42px;
+color: var(--text-light);
+font-size: 1.1rem;
+}
+.auth-input-group .toggle-password {
+position: absolute;
+right: 18px;
+top: 42px;
+cursor: pointer;
+color: var(--text-light);
+}
+.auth-input-group .toggle-password:hover {
+color: var(--primary);
+}
+.auth-btn {
+padding: 16px 32px;
+border-radius: 16px;
+border: none;
+cursor: pointer;
+font-weight: 700;
+font-size: 1rem;
+transition: all 0.3s;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+background: var(--gradient-1);
+color: white;
+min-height: 56px;
+}
+.auth-btn:hover {
+transform: translateY(-2px);
+filter: brightness(1.1);
+}
+.auth-btn:disabled {
+opacity: 0.7;
+cursor: not-allowed;
+transform: none;
+}
+.auth-divider {
+display: flex;
+align-items: center;
+gap: 16px;
+margin: 24px 0;
+color: var(--text-light);
+}
+.auth-divider::before,
+.auth-divider::after {
+content: '';
+flex: 1;
+height: 1px;
+background: var(--border);
+}
+.auth-social {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 12px;
+}
+.auth-social-btn {
+padding: 14px;
+border-radius: 12px;
+border: 2px solid var(--border);
+background: var(--bg);
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+font-weight: 600;
+color: var(--text);
+transition: all 0.3s;
+}
+.auth-social-btn:hover {
+border-color: var(--primary);
+background: var(--card);
+}
+.auth-switch {
+text-align: center;
+margin-top: 32px;
+color: var(--text-light);
+}
+.auth-switch a {
+color: var(--primary);
+font-weight: 700;
+text-decoration: none;
+}
+.auth-switch a:hover {
+text-decoration: underline;
+}
+.auth-error {
+background: #fef2f2;
+border: 2px solid #fecaca;
+color: #dc2626;
+padding: 16px;
+border-radius: 12px;
+margin-bottom: 20px;
+display: none;
+align-items: center;
+gap: 12px;
+}
+.auth-success {
+background: #f0fdf4;
+border: 2px solid #bbf7d0;
+color: #16a34a;
+padding: 16px;
+border-radius: 12px;
+margin-bottom: 20px;
+display: none;
+align-items: center;
+gap: 12px;
+}
+/* ==================== TOP NAVIGATION ==================== */
+.top-nav {
+position: fixed;
+top: 0;
+left: var(--sidebar-width);
+right: 0;
+height: 70px;
+background: var(--card);
+border-bottom: 2px solid var(--border);
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 32px;
+z-index: 998;
+transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.top-nav.collapsed {
+left: var(--sidebar-collapsed-width);
+}
+.top-nav-left {
+display: flex;
+align-items: center;
+gap: 16px;
+}
+.sidebar-toggle {
+background: var(--bg);
+border: 2px solid var(--border);
+color: var(--text);
+width: 44px;
+height: 44px;
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+font-size: 1.2rem;
+transition: all 0.3s;
+}
+.sidebar-toggle:hover {
+border-color: var(--primary);
+color: var(--primary);
+}
+.page-title-top {
+display: flex;
+flex-direction: column;
+}
+.page-title-top h1 {
+font-size: 1.5rem;
+font-weight: 800;
+color: var(--dark);
+}
+.page-title-top p {
+font-size: 0.875rem;
+color: var(--text-light);
+}
+.top-nav-right {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.theme-toggle {
+background: var(--bg);
+border: 2px solid var(--border);
+color: var(--text);
+width: 44px;
+height: 44px;
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+font-size: 1.2rem;
+transition: all 0.3s;
+}
+.theme-toggle:hover {
+border-color: var(--primary);
+color: var(--primary);
+}
+.notification-btn {
+background: var(--bg);
+border: 2px solid var(--border);
+color: var(--text);
+width: 44px;
+height: 44px;
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+font-size: 1.2rem;
+transition: all 0.3s;
+position: relative;
+}
+.notification-btn:hover {
+border-color: var(--primary);
+color: var(--primary);
+}
+.notification-badge {
+position: absolute;
+top: -4px;
+right: -4px;
+background: var(--danger);
+color: white;
+font-size: 0.65rem;
+font-weight: 700;
+padding: 2px 6px;
+border-radius: 10px;
+min-width: 18px;
+text-align: center;
+}
+.user-profile {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 8px 16px 8px 8px;
+border-radius: 16px;
+border: 2px solid var(--border);
+background: var(--bg);
+cursor: pointer;
+transition: all 0.3s;
+}
+.user-profile:hover {
+border-color: var(--primary);
+}
+.user-avatar {
+width: 40px;
+height: 40px;
+border-radius: 12px;
+background: var(--gradient-1);
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-weight: 700;
+font-size: 1rem;
+}
+.user-info {
+display: flex;
+flex-direction: column;
+}
+.user-name {
+font-size: 0.9rem;
+font-weight: 700;
+color: var(--dark);
+}
+.user-role {
+font-size: 0.75rem;
+color: var(--text-light);
+}
+/* ==================== NOTIFICATIONS PANEL ==================== */
+.notifications-panel {
+position: fixed;
+top: 70px;
+right: 20px;
+width: 400px;
+background: var(--card);
+border: 2px solid var(--border);
+border-radius: 20px;
+box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+z-index: 9999;
+display: none;
+flex-direction: column;
+max-height: 500px;
+overflow: hidden;
+}
+.notifications-panel.active {
+display: flex;
+animation: slideDown 0.3s ease;
+}
+@keyframes slideDown {
+from { opacity: 0; transform: translateY(-10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.notifications-header {
+padding: 20px;
+border-bottom: 2px solid var(--border);
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.notifications-header h3 {
+font-size: 1.1rem;
+font-weight: 700;
+color: var(--dark);
+}
+.notifications-actions {
+display: flex;
+gap: 8px;
+}
+.notifications-actions button {
+background: var(--bg);
+border: none;
+padding: 8px 12px;
+border-radius: 8px;
+color: var(--text-light);
+cursor: pointer;
+font-size: 0.85rem;
+font-weight: 600;
+transition: all 0.3s;
+}
+.notifications-actions button:hover {
+background: var(--primary);
+color: white;
+}
+.notifications-list {
+overflow-y: auto;
+flex: 1;
+}
+.notification-item {
+padding: 16px 20px;
+border-bottom: 1px solid var(--border);
+display: flex;
+gap: 12px;
+cursor: pointer;
+transition: background 0.3s;
+}
+.notification-item:hover {
+background: var(--bg);
+}
+.notification-item.unread {
+background: rgba(99, 102, 241, 0.05);
+}
+.notification-item.unread::before {
+content: '';
+width: 8px;
+height: 8px;
+background: var(--primary);
+border-radius: 50%;
+flex-shrink: 0;
+margin-top: 6px;
+}
+.notification-icon {
+width: 40px;
+height: 40px;
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.1rem;
+flex-shrink: 0;
+}
+.notification-icon.earnings { background: #d1fae5; color: var(--accent); }
+.notification-icon.campaign { background: #fee2e2; color: var(--danger); }
+.notification-icon.system { background: #e0e7ff; color: var(--primary); }
+.notification-icon.payment { background: #fef3c7; color: var(--warning); }
+.notification-content {
+flex: 1;
+}
+.notification-content h4 {
+font-size: 0.9rem;
+font-weight: 700;
+color: var(--dark);
+margin-bottom: 4px;
+}
+.notification-content p {
+font-size: 0.85rem;
+color: var(--text-light);
+margin-bottom: 4px;
+}
+.notification-time {
+font-size: 0.75rem;
+color: var(--text-light);
+}
+.notifications-footer {
+padding: 16px 20px;
+border-top: 2px solid var(--border);
+text-align: center;
+}
+.notifications-footer button {
+background: var(--primary);
+color: white;
+border: none;
+padding: 12px 24px;
+border-radius: 12px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s;
+}
+.notifications-footer button:hover {
+filter: brightness(1.1);
+}
+/* ==================== SIDEBAR ==================== */
+.mobile-overlay {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0,0,0,0.5);
+z-index: 997;
+opacity: 0;
+transition: opacity 0.3s;
+}
+.mobile-overlay.active {
+display: block;
+opacity: 1;
+}
+.sidebar {
+width: var(--sidebar-width);
+background: var(--card);
+border-right: 2px solid var(--border);
+display: flex;
+flex-direction: column;
+padding: 24px 16px;
+overflow-y: auto;
+position: fixed;
+left: 0;
+top: 0;
+height: 100vh;
+z-index: 999;
+transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sidebar.collapsed {
+width: var(--sidebar-collapsed-width);
+}
+.sidebar.collapsed .logo span,
+.sidebar.collapsed .nav-label,
+.sidebar.collapsed .nav-link span,
+.sidebar.collapsed .badge-new,
+.sidebar.collapsed .badge-count {
+display: none;
+}
+.sidebar.collapsed .nav-link {
+justify-content: center;
+padding: 14px;
+}
+.sidebar.collapsed .nav-link i {
+margin: 0;
+}
+.sidebar.collapsed .logo {
+justify-content: center;
+margin-bottom: 32px;
+}
+.logo {
+font-size: 1.5rem;
+font-weight: 800;
+background: var(--gradient-1);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+margin-bottom: 40px;
+display: flex;
+align-items: center;
+gap: 12px;
+transition: all 0.3s;
+}
+.logo i {
+font-size: 1.8rem;
+-webkit-text-fill-color: var(--primary);
+}
+.nav-section {
+margin-bottom: 20px;
+}
+.nav-label {
+font-size: 0.75rem;
+font-weight: 700;
+text-transform: uppercase;
+color: var(--text-light);
+letter-spacing: 0.05em;
+margin-bottom: 12px;
+padding-left: 16px;
+transition: opacity 0.3s;
+}
+.sidebar.collapsed .nav-label {
+text-align: center;
+padding-left: 0;
+}
+.nav-links {
+list-style: none;
+}
+.nav-item {
+margin-bottom: 4px;
+}
+.nav-link {
+display: flex;
+align-items: center;
+gap: 14px;
+padding: 14px 16px;
+color: var(--text-light);
+text-decoration: none;
+border-radius: 16px;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+cursor: pointer;
+font-weight: 600;
+font-size: 0.95rem;
+border: 2px solid transparent;
+position: relative;
+white-space: nowrap;
+overflow: hidden;
+}
+.nav-link:hover {
+background: var(--bg);
+color: var(--primary);
+}
+.nav-link.active {
+background: var(--primary);
+color: white;
+border-color: var(--primary-light);
+}
+.nav-link i {
+font-size: 1.1rem;
+width: 24px;
+text-align: center;
+flex-shrink: 0;
+}
+.badge-new {
+background: var(--gradient-2);
+color: white;
+font-size: 0.65rem;
+padding: 2px 8px;
+border-radius: 20px;
+font-weight: 700;
+margin-left: auto;
+}
+.badge-count {
+background: var(--danger);
+color: white;
+font-size: 0.65rem;
+padding: 2px 8px;
+border-radius: 20px;
+font-weight: 700;
+margin-left: auto;
+}
+.logout-btn {
+color: var(--danger);
+margin-top: auto;
+}
+.logout-btn:hover {
+background: #fef2f2;
+}
+/* ==================== MAIN CONTENT ==================== */
+.main-content {
+flex-grow: 1;
+overflow-y: auto;
+padding: 32px;
+margin-left: var(--sidebar-width);
+transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+padding-top: 100px;
+}
+.main-content.collapsed {
+margin-left: var(--sidebar-collapsed-width);
+}
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 32px;
+flex-wrap: wrap;
+gap: 20px;
+}
+.page-title h1 {
+font-size: 1.75rem;
+font-weight: 800;
+color: var(--dark);
+letter-spacing: -0.02em;
+line-height: 1.2;
+}
+.page-title p {
+color: var(--text-light);
+font-size: 0.95rem;
+margin-top: 8px;
+font-weight: 500;
+}
+.btn {
+padding: 14px 28px;
+border-radius: 16px;
+border: none;
+cursor: pointer;
+font-weight: 700;
+font-size: 0.95rem;
+transition: all 0.3s;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+font-family: 'Plus Jakarta Sans', sans-serif;
+text-decoration: none;
+white-space: nowrap;
+min-height: 48px;
+min-width: 48px;
+}
+.btn-primary {
+background: var(--gradient-1);
+color: white;
+}
+.btn-primary:hover {
+transform: translateY(-2px);
+filter: brightness(1.1);
+}
+.btn-secondary {
+background: var(--gradient-2);
+color: white;
+}
+.btn-accent {
+background: var(--gradient-4);
+color: white;
+}
+.btn-outline {
+background: transparent;
+border: 2px solid var(--border);
+color: var(--text);
+}
+.btn-outline:hover {
+border-color: var(--primary);
+color: var(--primary);
+background: var(--bg);
+}
+.btn-ghost {
+background: transparent;
+color: var(--text-light);
+}
+.btn-ghost:hover {
+background: var(--bg);
+color: var(--primary);
+}
+.btn-sm {
+padding: 10px 20px;
+font-size: 0.875rem;
+min-height: 40px;
+}
+.btn-lg {
+padding: 16px 32px;
+font-size: 1.05rem;
+min-height: 52px;
+}
+.btn-full {
+width: 100%;
+}
+.spinner {
+width: 20px;
+height: 20px;
+border: 3px solid rgba(255,255,255,0.3);
+border-radius: 50%;
+border-top-color: white;
+animation: spin 1s ease-in-out infinite;
+}
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+.page-section {
+display: none;
+animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.page-section.active {
+display: block;
+}
+@keyframes slideUp {
+from { opacity: 0; transform: translateY(30px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+gap: 24px;
+margin-bottom: 32px;
+}
+.card {
+background: var(--card);
+border-radius: 24px;
+padding: 28px;
+border: 2px solid var(--border);
+margin-bottom: 24px;
+transition: all 0.3s;
+}
+.card:hover {
+border-color: var(--primary-light);
+transform: translateY(-2px);
+}
+.stat-card {
+position: relative;
+overflow: hidden;
+}
+.stat-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 4px;
+background: var(--gradient-1);
+}
+.stat-card.pink::before { background: var(--gradient-2); }
+.stat-card.green::before { background: var(--gradient-4); }
+.stat-card.blue::before { background: var(--gradient-3); }
+.stat-card.purple::before { background: var(--gradient-5); }
+.stat-card h3 {
+color: var(--text-light);
+font-size: 0.85rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.05em;
+margin-bottom: 12px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.stat-card .value {
+font-size: 2.2rem;
+font-weight: 800;
+color: var(--dark);
+letter-spacing: -0.02em;
+margin-bottom: 8px;
+}
+.stat-card .sub-text {
+font-size: 0.9rem;
+color: var(--text-light);
+font-weight: 600;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.text-success { color: var(--accent); }
+.text-warning { color: var(--warning); }
+.text-pink { color: var(--secondary); }
+.alert-card {
+background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+border: 2px solid #fbbf24;
+border-radius: 24px;
+padding: 24px;
+margin-bottom: 32px;
+display: flex;
+align-items: center;
+gap: 20px;
+flex-wrap: wrap;
+}
+.alert-icon {
+width: 56px;
+height: 56px;
+background: white;
+border-radius: 16px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5rem;
+color: var(--warning);
+flex-shrink: 0;
+}
+.alert-content {
+flex: 1;
+min-width: 200px;
+}
+.alert-content h4 {
+font-weight: 700;
+color: var(--dark);
+margin-bottom: 4px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.alert-content p {
+color: #92400e;
+font-size: 0.95rem;
+}
+.upload-zone {
+border: 3px dashed var(--border);
+border-radius: 24px;
+padding: 48px;
+text-align: center;
+background: var(--bg);
+cursor: pointer;
+transition: all 0.3s;
+margin-bottom: 32px;
+min-height: 200px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+.upload-zone:hover {
+border-color: var(--primary);
+background: #eef2ff;
+transform: scale(1.02);
+}
+.upload-zone i {
+font-size: 4rem;
+background: var(--gradient-1);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+margin-bottom: 20px;
+}
+.upload-zone h4 {
+font-size: 1.3rem;
+font-weight: 700;
+margin-bottom: 8px;
+color: var(--dark);
+}
+.upload-zone p {
+color: var(--text-light);
+margin-bottom: 20px;
+}
+.campaign-card {
+background: var(--card);
+border: 2px solid var(--border);
+border-radius: 24px;
+padding: 28px;
+margin-bottom: 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 24px;
+transition: all 0.3s;
+flex-wrap: wrap;
+}
+.campaign-card:hover {
+border-color: var(--primary);
+transform: translateX(8px);
+}
+.campaign-info {
+flex: 1;
+min-width: 250px;
+}
+.campaign-info h4 {
+font-size: 1.2rem;
+font-weight: 700;
+margin-bottom: 8px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.campaign-info p {
+color: var(--text-light);
+font-size: 0.95rem;
+margin-bottom: 12px;
+}
+.tags {
+display: flex;
+gap: 8px;
+flex-wrap: wrap;
+}
+.tag {
+padding: 6px 14px;
+border-radius: 20px;
+font-size: 0.8rem;
+font-weight: 700;
+display: inline-flex;
+align-items: center;
+gap: 6px;
+}
+.tag-hot {
+background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+color: var(--danger);
+}
+.tag-new {
+background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+color: var(--accent);
+}
+.tag-time {
+background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+color: var(--warning);
+}
+.tag-pending {
+background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+color: var(--primary);
+}
+.wallet-hero {
+background: var(--gradient-1);
+border-radius: 32px;
+padding: 40px;
+color: white;
+margin-bottom: 32px;
+position: relative;
+overflow: hidden;
+cursor: pointer;
+}
+.wallet-hero::before {
+content: '';
+position: absolute;
+top: -100px;
+right: -100px;
+width: 300px;
+height: 300px;
+background: rgba(255,255,255,0.1);
+border-radius: 50%;
+}
+.wallet-hero::after {
+content: '';
+position: absolute;
+bottom: -50px;
+left: -50px;
+width: 200px;
+height: 200px;
+background: rgba(255,255,255,0.05);
+border-radius: 50%;
+}
+.wallet-hero h3 {
+font-size: 1rem;
+font-weight: 600;
+opacity: 0.9;
+margin-bottom: 12px;
+position: relative;
+}
+.wallet-hero .balance {
+font-size: 3.5rem;
+font-weight: 800;
+letter-spacing: -0.03em;
+margin-bottom: 24px;
+position: relative;
+}
+.wallet-actions {
+display: flex;
+gap: 12px;
+position: relative;
+flex-wrap: wrap;
+}
+.wallet-actions .btn {
+background: rgba(255,255,255,0.2);
+backdrop-filter: blur(10px);
+border: 2px solid rgba(255,255,255,0.3);
+color: white;
+}
+.wallet-actions .btn:hover {
+background: rgba(255,255,255,0.3);
+}
+.table-container {
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+margin-top: 20px;
+border-radius: 16px;
+border: 2px solid var(--border);
+width: 100%;
+}
+table {
+width: 100%;
+border-collapse: separate;
+border-spacing: 0;
+min-width: 600px;
+}
+th {
+text-align: left;
+padding: 16px;
+color: var(--text-light);
+font-size: 0.8rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.05em;
+border-bottom: 2px solid var(--border);
+white-space: nowrap;
+}
+td {
+padding: 20px 16px;
+border-bottom: 1px solid var(--border);
+font-size: 0.95rem;
+}
+tr:last-child td {
+border-bottom: none;
+}
+tr:hover td {
+background: var(--bg);
+}
+.social-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 20px;
+}
+.social-card {
+background: var(--card);
+border: 2px solid var(--border);
+border-radius: 24px;
+padding: 28px;
+display: flex;
+flex-direction: column;
+gap: 20px;
+transition: all 0.3s;
+}
+.social-card:hover {
+border-color: var(--primary);
+transform: translateY(-4px);
+}
+.social-header {
+display: flex;
+align-items: center;
+gap: 16px;
+}
+.social-icon {
+width: 60px;
+height: 60px;
+border-radius: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.8rem;
+}
+.social-icon.instagram { background: linear-gradient(135deg, #f094fb 0%, #f5576c 100%); color: white; }
+.social-icon.tiktok { background: var(--dark); color: white; }
+.social-icon.youtube { background: var(--danger); color: white; }
+.social-icon.twitter { background: #1da1f2; color: white; }
+.social-icon.snapchat { background: #fffc00; color: var(--dark); }
+.social-info h4 {
+font-weight: 700;
+margin-bottom: 4px;
+}
+.social-info p {
+color: var(--text-light);
+font-size: 0.9rem;
+}
+.form-group {
+margin-bottom: 24px;
+}
+.form-group label {
+display: block;
+margin-bottom: 10px;
+font-weight: 700;
+color: var(--dark);
+font-size: 0.95rem;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+width: 100%;
+padding: 16px;
+border: 2px solid var(--border);
+border-radius: 16px;
+font-size: 1rem;
+transition: all 0.3s;
+font-family: 'Plus Jakarta Sans', sans-serif;
+min-height: 52px;
+background: var(--card);
+color: var(--text);
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+outline: none;
+border-color: var(--primary);
+background: var(--bg);
+}
+.form-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 24px;
+}
+.input-hint {
+font-size: 0.85rem;
+color: var(--text-light);
+margin-top: 8px;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.tabs {
+display: flex;
+gap: 8px;
+margin-bottom: 28px;
+background: var(--bg);
+padding: 8px;
+border-radius: 20px;
+width: fit-content;
+max-width: 100%;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+}
+.tab {
+padding: 12px 24px;
+border-radius: 16px;
+cursor: pointer;
+font-size: 0.95rem;
+font-weight: 700;
+color: var(--text-light);
+transition: all 0.3s;
+border: 2px solid transparent;
+white-space: nowrap;
+}
+.tab:hover {
+color: var(--primary);
+background: white;
+}
+.tab.active {
+background: white;
+color: var(--primary);
+border-color: var(--border);
+}
+.empty-state {
+text-align: center;
+padding: 60px 20px;
+color: var(--text-light);
+}
+.empty-state i {
+font-size: 4rem;
+margin-bottom: 20px;
+opacity: 0.3;
+}
+.empty-state h4 {
+font-size: 1.2rem;
+color: var(--text);
+margin-bottom: 8px;
+}
+.filters {
+display: flex;
+gap: 12px;
+margin-bottom: 24px;
+flex-wrap: wrap;
+}
+.filter-chip {
+padding: 10px 20px;
+border-radius: 20px;
+border: 2px solid var(--border);
+background: white;
+cursor: pointer;
+font-weight: 600;
+font-size: 0.9rem;
+transition: all 0.3s;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+min-height: 44px;
+}
+.filter-chip:hover {
+border-color: var(--primary);
+color: var(--primary);
+}
+.filter-chip.active {
+background: var(--primary);
+color: white;
+border-color: var(--primary);
+}
+.progress-bar {
+height: 12px;
+background: var(--bg);
+border-radius: 10px;
+overflow: hidden;
+margin-top: 12px;
+}
+.progress-fill {
+height: 100%;
+background: var(--gradient-1);
+border-radius: 10px;
+transition: width 0.5s;
+}
+/* Toast Notifications */
+.toast-container {
+position: fixed;
+top: 90px;
+right: 20px;
+z-index: 9999;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+.toast {
+background: var(--card);
+color: var(--text);
+padding: 16px 20px;
+border-radius: 12px;
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+border-left: 4px solid var(--primary);
+display: flex;
+align-items: center;
+gap: 12px;
+min-width: 300px;
+animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.toast.success { border-left-color: var(--accent); }
+.toast.error { border-left-color: var(--danger); }
+.toast i { font-size: 1.2rem; }
+.toast.success i { color: var(--accent); }
+.toast.error i { color: var(--danger); }
+@keyframes slideIn {
+from { transform: translateX(100%); opacity: 0; }
+to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideOut {
+to { transform: translateX(100%); opacity: 0; }
+}
+/* Bottom Navigation for Mobile */
+.bottom-nav {
+display: none;
+position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
+background: var(--card);
+border-top: 2px solid var(--border);
+padding: 8px 16px;
+z-index: 1000;
+justify-content: space-around;
+box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+/* Chart Container */
+.chart-container {
+position: relative;
+height: 350px;
+width: 100%;
+border-radius: 16px;
+background: var(--bg);
+padding: 20px;
+}
+.chart-glow {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+pointer-events: none;
+}
+/* Campaign Progress */
+.campaign-progress {
+margin-top: 16px;
+}
+.progress-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
+}
+.progress-label {
+font-size: 0.85rem;
+font-weight: 600;
+color: var(--text-light);
+}
+.progress-value {
+font-size: 0.85rem;
+font-weight: 700;
+color: var(--primary);
+}
+.progress-track {
+height: 8px;
+background: var(--bg);
+border-radius: 10px;
+overflow: hidden;
+}
+.progress-track .fill {
+height: 100%;
+background: var(--gradient-1);
+border-radius: 10px;
+transition: width 0.5s ease;
+}
+/* Timeline */
+.timeline {
+position: relative;
+padding-left: 30px;
+margin-top: 20px;
+}
+.timeline::before {
+content: '';
+position: absolute;
+left: 10px;
+top: 0;
+bottom: 0;
+width: 2px;
+background: var(--border);
+}
+.timeline-item {
+position: relative;
+padding-bottom: 24px;
+}
+.timeline-item:last-child {
+padding-bottom: 0;
+}
+.timeline-item::before {
+content: '';
+position: absolute;
+left: -24px;
+top: 4px;
+width: 12px;
+height: 12px;
+border-radius: 50%;
+background: var(--border);
+border: 2px solid var(--card);
+}
+.timeline-item.completed::before {
+background: var(--accent);
+}
+.timeline-item.active::before {
+background: var(--primary);
+animation: pulse 2s infinite;
+}
+.timeline-item.pending::before {
+background: var(--border);
+}
+@keyframes pulse {
+0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+50% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+}
+.timeline-content h5 {
+font-size: 0.9rem;
+font-weight: 700;
+color: var(--dark);
+margin-bottom: 4px;
+}
+.timeline-content p {
+font-size: 0.8rem;
+color: var(--text-light);
+}
+/* Settings */
+.settings-section {
+margin-bottom: 32px;
+}
+.settings-section h4 {
+font-size: 1.1rem;
+font-weight: 700;
+color: var(--dark);
+margin-bottom: 16px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.settings-section h4 i {
+color: var(--primary);
+}
+.setting-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 16px 0;
+border-bottom: 1px solid var(--border);
+}
+.setting-item:last-child {
+border-bottom: none;
+}
+.setting-info h5 {
+font-size: 0.95rem;
+font-weight: 600;
+color: var(--text);
+margin-bottom: 4px;
+}
+.setting-info p {
+font-size: 0.85rem;
+color: var(--text-light);
+}
+.toggle-switch {
+position: relative;
+width: 52px;
+height: 28px;
+}
+.toggle-switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.toggle-slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: var(--border);
+border-radius: 28px;
+transition: 0.3s;
+}
+.toggle-slider::before {
+position: absolute;
+content: "";
+height: 22px;
+width: 22px;
+left: 3px;
+bottom: 3px;
+background: white;
+border-radius: 50%;
+transition: 0.3s;
+}
+input:checked + .toggle-slider {
+background: var(--primary);
+}
+input:checked + .toggle-slider::before {
+transform: translateX(24px);
+}
+.danger-zone {
+border: 2px solid var(--danger);
+border-radius: 16px;
+padding: 24px;
+margin-top: 24px;
+}
+.danger-zone h4 {
+color: var(--danger);
+margin-bottom: 12px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.danger-zone p {
+color: var(--text-light);
+font-size: 0.9rem;
+margin-bottom: 16px;
+}
+.btn-danger {
+background: var(--danger);
+color: white;
+}
+.btn-danger:hover {
+filter: brightness(0.9);
+}
+/* Receipt Status */
+.receipt-status-card {
+background: var(--card);
+border: 2px solid var(--border);
+border-radius: 16px;
+padding: 20px;
+margin-bottom: 16px;
+display: flex;
+align-items: center;
+gap: 16px;
+transition: all 0.3s;
+}
+.receipt-status-card:hover {
+border-color: var(--primary);
+transform: translateX(4px);
+}
+.receipt-icon {
+width: 50px;
+height: 50px;
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.3rem;
+flex-shrink: 0;
+}
+.receipt-icon.approved { background: #d1fae5; color: var(--accent); }
+.receipt-icon.pending { background: #fef3c7; color: var(--warning); }
+.receipt-icon.rejected { background: #fee2e2; color: var(--danger); }
+.receipt-details {
+flex: 1;
+}
+.receipt-details h5 {
+font-size: 1rem;
+font-weight: 700;
+color: var(--dark);
+margin-bottom: 4px;
+}
+.receipt-details p {
+font-size: 0.85rem;
+color: var(--text-light);
+}
+.receipt-amount {
+text-align: right;
+}
+.receipt-amount .value {
+font-size: 1.2rem;
+font-weight: 800;
+color: var(--accent);
+}
+.receipt-amount .status {
+font-size: 0.8rem;
+font-weight: 600;
+}
+/* Modal */
+.modal-overlay {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0,0,0,0.5);
+z-index: 10000;
+align-items: center;
+justify-content: center;
+}
+.modal-overlay.active {
+display: flex;
+}
+.modal {
+background: var(--card);
+border-radius: 24px;
+padding: 32px;
+max-width: 500px;
+width: 90%;
+max-height: 80vh;
+overflow-y: auto;
+animation: modalSlide 0.3s ease;
+}
+@keyframes modalSlide {
+from { opacity: 0; transform: translateY(-20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.modal-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 24px;
+}
+.modal-header h3 {
+font-size: 1.3rem;
+font-weight: 800;
+color: var(--dark);
+}
+.modal-close {
+background: none;
+border: none;
+font-size: 1.5rem;
+color: var(--text-light);
+cursor: pointer;
+width: 40px;
+height: 40px;
+border-radius: 10px;
+transition: all 0.3s;
+}
+.modal-close:hover {
+background: var(--bg);
+color: var(--text);
+}
+/* Responsive */
+@media (max-width: 768px) {
+.auth-wrapper {
+grid-template-columns: 1fr;
+}
+.auth-left {
+display: none;
+}
+.auth-right {
+padding: 30px 20px;
+}
+.auth-title {
+font-size: 1.5rem;
+}
+.auth-logo {
+font-size: 1.5rem;
+margin-bottom: 24px;
+}
+.top-nav {
+left: 0 !important;
+padding: 0 12px;
+height: 60px;
+}
+.top-nav.collapsed {
+left: 0 !important;
+}
+.page-title-top h1 {
+font-size: 1.1rem;
+}
+.page-title-top p {
+font-size: 0.75rem;
+display: none;
+}
+.sidebar {
+transform: translateX(-100%);
+width: 260px;
+}
+.sidebar.open {
+transform: translateX(0);
+}
+.sidebar.collapsed {
+width: 260px;
+transform: translateX(-100%);
+}
+.mobile-overlay.active {
+display: block;
+}
+.main-content {
+margin-left: 0 !important;
+padding: 70px 12px 80px;
+}
+.main-content.collapsed {
+margin-left: 0 !important;
+}
+.page-title h1 {
+font-size: 1.25rem;
+}
+.page-title p {
+font-size: 0.8rem;
+}
+.stats-grid {
+grid-template-columns: 1fr;
+gap: 12px;
+margin-bottom: 20px;
+}
+.stat-card {
+padding: 20px;
+}
+.stat-card .value {
+font-size: 1.6rem;
+}
+.stat-card h3 {
+font-size: 0.75rem;
+}
+.card {
+padding: 20px;
+border-radius: 20px;
+margin-bottom: 16px;
+}
+.wallet-hero {
+padding: 20px;
+border-radius: 24px;
+margin-bottom: 20px;
+}
+.wallet-hero .balance {
+font-size: 2rem;
+}
+.wallet-actions {
+flex-direction: column;
+gap: 8px;
+}
+.wallet-actions .btn {
+width: 100%;
+padding: 12px;
+}
+.bottom-nav {
+display: flex;
+}
+.main-content {
+padding-bottom: 80px;
+}
+.chart-container {
+height: 250px;
+padding: 12px;
+}
+.notifications-panel {
+width: calc(100% - 24px);
+right: 12px;
+top: 60px;
+}
+.alert-card {
+padding: 16px;
+margin-bottom: 20px;
+}
+.alert-icon {
+width: 48px;
+height: 48px;
+font-size: 1.2rem;
+}
+.alert-content h4 {
+font-size: 0.9rem;
+}
+.alert-content p {
+font-size: 0.8rem;
+}
+.upload-zone {
+padding: 30px 20px;
+min-height: 150px;
+}
+.upload-zone i {
+font-size: 3rem;
+}
+.upload-zone h4 {
+font-size: 1.1rem;
+}
+.campaign-card {
+padding: 20px;
+margin-bottom: 16px;
+}
+.campaign-info h4 {
+font-size: 1rem;
+}
+.campaign-info p {
+font-size: 0.85rem;
+}
+.form-row {
+grid-template-columns: 1fr;
+gap: 0;
+}
+.tabs {
+width: 100%;
+}
+.tab {
+padding: 10px 16px;
+font-size: 0.85rem;
+}
+.filters {
+gap: 8px;
+}
+.filter-chip {
+padding: 8px 16px;
+font-size: 0.8rem;
+}
+.receipt-status-card {
+padding: 16px;
+}
+.social-grid {
+grid-template-columns: 1fr;
+gap: 16px;
+}
+.social-card {
+padding: 20px;
+}
+.setting-item {
+padding: 12px 0;
+}
+.setting-info h5 {
+font-size: 0.85rem;
+}
+.setting-info p {
+font-size: 0.75rem;
+}
+.btn {
+padding: 12px 20px;
+font-size: 0.875rem;
+}
+.btn-sm {
+padding: 8px 16px;
+font-size: 0.8rem;
+}
+.btn-lg {
+padding: 14px 24px;
+font-size: 0.9rem;
+}
+.toast {
+min-width: auto;
+width: calc(100% - 40px);
+padding: 12px 16px;
+}
+.toast-container {
+top: 70px;
+right: 12px;
+}
+table {
+min-width: 500px;
+font-size: 0.85rem;
+}
+th, td {
+padding: 12px 10px;
+}
+}
+@media (max-width: 480px) {
+html {
+font-size: 14px;
+}
+.page-title h1 {
+font-size: 1.1rem;
+}
+.stat-card .value {
+font-size: 1.4rem;
+}
+.wallet-hero .balance {
+font-size: 1.75rem;
+}
+.btn {
+padding: 12px 16px;
+font-size: 0.85rem;
+}
+.card {
+padding: 16px;
+}
+.auth-title {
+font-size: 1.3rem;
+}
+.auth-subtitle {
+font-size: 0.9rem;
+}
+.alert-content h4 {
+font-size: 0.85rem;
+}
+.alert-content p {
+font-size: 0.75rem;
+}
+.upload-zone h4 {
+font-size: 1rem;
+}
+.upload-zone p {
+font-size: 0.8rem;
+}
+.campaign-info h4 {
+font-size: 0.95rem;
+}
+.campaign-info p {
+font-size: 0.8rem;
+}
+.tags {
+gap: 6px;
+}
+.tag {
+padding: 4px 10px;
+font-size: 0.7rem;
+}
+.form-group label {
+font-size: 0.85rem;
+}
+.form-group input,
+.form-group select {
+padding: 12px;
+font-size: 0.9rem;
+}
+.modal {
+padding: 24px 20px;
+}
+.modal-header h3 {
+font-size: 1.1rem;
+}
+.bottom-nav-item {
+padding: 6px 8px;
+font-size: 0.7rem;
+}
+.bottom-nav-item i {
+font-size: 1.1rem;
+}
+}
+::-webkit-scrollbar {
+width: 8px;
+height: 8px;
+}
+::-webkit-scrollbar-track {
+background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+background: var(--border);
+border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: var(--text-light);
+}
+@media (hover: none) {
+.nav-link:active {
+transform: scale(0.98);
+}
+.btn:active {
+transform: scale(0.98);
+}
+.tab:active {
+transform: scale(0.98);
+}
+}
+.bottom-nav-item {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 4px;
+padding: 8px 12px;
+color: var(--text-light);
+text-decoration: none;
+border-radius: 12px;
+transition: all 0.2s;
+font-size: 0.75rem;
+font-weight: 600;
+}
+.bottom-nav-item i {
+font-size: 1.3rem;
+}
+.bottom-nav-item.active {
+color: var(--primary);
+background: var(--bg);
+}
+</style>
+</head>
+<body>
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+<!-- ==================== AUTH PAGES ==================== -->
+<!-- FIXED: Added 'active' class here so login shows FIRST -->
+<div class="auth-container active" id="authContainer">
+<div class="auth-wrapper">
+<div class="auth-left">
+<div class="auth-left-content">
+<h1>Turn Your Content Into Cash 💸</h1>
+<p>Join 50,000+ creators earning passive income with FluenPay. Snap receipts, tag brands, get paid!</p>
+<ul class="auth-features">
+<li>
+<i class="fa-solid fa-bolt"></i>
+<span>10% cashback on every purchase</span>
+</li>
+<li>
+<i class="fa-solid fa-handshake"></i>
+<span>Exclusive brand collaborations</span>
+</li>
+<li>
+<i class="fa-solid fa-building-columns"></i>
+<span>Instant withdrawals to Saudi banks</span>
+</li>
+<li>
+<i class="fa-solid fa-shield-halved"></i>
+<span>Secure & verified payments</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="auth-right">
+<div class="auth-logo">
+<i class="fa-solid fa-bolt"></i> FluenPay
+</div>
+<div id="loginForm">
+<h2 class="auth-title">Welcome Back! 👋</h2>
+<p class="auth-subtitle">Sign in to continue your creator journey</p>
+<div class="auth-error" id="loginError">
+<i class="fa-solid fa-circle-exclamation"></i>
+<span>Invalid email or password</span>
+</div>
+<div class="auth-success" id="loginSuccess">
+<i class="fa-solid fa-circle-check"></i>
+<span>Login successful! Redirecting...</span>
+</div>
+<form class="auth-form" onsubmit="handleLogin(event)">
+<div class="auth-input-group">
+<label>Email Address</label>
+<i class="fa-solid fa-envelope"></i>
+<input type="email" id="loginEmail" placeholder="creator@example.com" required>
+</div>
+<div class="auth-input-group">
+<label>Password</label>
+<i class="fa-solid fa-lock"></i>
+<input type="password" id="loginPassword" placeholder="••••••••" required>
+<i class="fa-solid fa-eye toggle-password" onclick="togglePassword('loginPassword', this)"></i>
+</div>
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+<label style="display:flex; align-items:center; gap:8px; font-weight:500; font-size:0.9rem;">
+<input type="checkbox" style="width:auto;"> Remember me
+</label>
+<a href="#" style="color:var(--primary); font-weight:600; font-size:0.9rem; text-decoration:none;">Forgot password?</a>
+</div>
+<button type="submit" class="auth-btn" id="loginBtn">
+<i class="fa-solid fa-right-to-bracket"></i>
+<span>Sign In</span>
+</button>
+</form>
+<div class="auth-divider">or continue with</div>
+<div class="auth-social">
+<button class="auth-social-btn" onclick="socialLogin('google')">
+<i class="fa-brands fa-google" style="color:#EA4335;"></i>
+</button>
+<button class="auth-social-btn" onclick="socialLogin('apple')">
+<i class="fa-brands fa-apple" style="color:#000;"></i>
+</button>
+<button class="auth-social-btn" onclick="socialLogin('twitter')">
+<i class="fa-brands fa-twitter" style="color:#1DA1F2;"></i>
+</button>
+</div>
+<div class="auth-switch">
+Don't have an account? <a href="#" onclick="showSignup()">Sign Up</a>
+</div>
+</div>
+<div id="signupForm" style="display:none;">
+<h2 class="auth-title">Join the Squad! 🚀</h2>
+<p class="auth-subtitle">Create your account and start earning today</p>
+<form class="auth-form" onsubmit="handleSignup(event)">
+<div class="auth-input-group">
+<label>Full Name</label>
+<i class="fa-solid fa-user"></i>
+<input type="text" id="signupName" placeholder="Ahmed Al-Saud" required>
+</div>
+<div class="auth-input-group">
+<label>Email Address</label>
+<i class="fa-solid fa-envelope"></i>
+<input type="email" id="signupEmail" placeholder="creator@example.com" required>
+</div>
+<div class="auth-input-group">
+<label>Password</label>
+<i class="fa-solid fa-lock"></i>
+<input type="password" id="signupPassword" placeholder="••••••••" required minlength="8">
+<i class="fa-solid fa-eye toggle-password" onclick="togglePassword('signupPassword', this)"></i>
+</div>
+<button type="submit" class="auth-btn" id="signupBtn">
+<i class="fa-solid fa-user-plus"></i>
+<span>Create Account</span>
+</button>
+</form>
+<div class="auth-switch">
+Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== TOP NAVIGATION ==================== -->
+<div class="top-nav" id="topNav">
+<div class="top-nav-left">
+<button class="sidebar-toggle" onclick="toggleSidebar()">
+<i class="fa-solid fa-bars" id="sidebarToggleIcon"></i>
+</button>
+<div class="page-title-top">
+<h1 id="topNavTitle">Dashboard</h1>
+<p id="topNavSubtitle">Welcome back!</p>
+</div>
+</div>
+<div class="top-nav-right">
+<button class="theme-toggle" onclick="toggleTheme()">
+<i class="fa-solid fa-moon"></i>
+</button>
+<button class="notification-btn" onclick="toggleNotifications()">
+<i class="fa-solid fa-bell"></i>
+<span class="notification-badge" id="notificationBadge">5</span>
+</button>
+<div class="user-profile" onclick="showPage('settings', null)">
+<div class="user-avatar">AS</div>
+<div class="user-info">
+<span class="user-name">Ahmed S.</span>
+<span class="user-role">Creator</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== NOTIFICATIONS PANEL ==================== -->
+<div class="notifications-panel" id="notificationsPanel">
+<div class="notifications-header">
+<h3><i class="fa-solid fa-bell"></i> Notifications</h3>
+<div class="notifications-actions">
+<button onclick="markAllRead()">Mark All Read</button>
+<button onclick="toggleNotifications()">Close</button>
+</div>
+</div>
+<div class="notifications-list" id="notificationsList">
+<!-- Notifications will be loaded here -->
+</div>
+<div class="notifications-footer">
+<button onclick="showPage('wallet', null)">View All Activity</button>
+</div>
+</div>
+<!-- ==================== MOBILE OVERLAY ==================== -->
+<div class="mobile-overlay" onclick="toggleMobileMenu()"></div>
+<!-- ==================== SIDEBAR ==================== -->
+<div class="sidebar" id="sidebar">
+<div class="logo">
+<i class="fa-solid fa-bolt"></i>
+<span>FluenPay</span>
+</div>
+<div class="nav-section">
+<div class="nav-label">Main</div>
+<ul class="nav-links">
+<li class="nav-item">
+<a class="nav-link active" onclick="showPage('dashboard', this)">
+<i class="fa-solid fa-house"></i>
+<span>Dashboard</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" onclick="showPage('receipts', this)">
+<i class="fa-solid fa-camera"></i>
+<span>Snap & Earn</span>
+<span class="badge-new">HOT</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" onclick="showPage('campaigns', this)">
+<i class="fa-solid fa-handshake"></i>
+<span>Brand Collabs</span>
+<span class="badge-count">3</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="nav-section">
+<div class="nav-label">Money</div>
+<ul class="nav-links">
+<li class="nav-item">
+<a class="nav-link" onclick="showPage('wallet', this)">
+<i class="fa-solid fa-coins"></i>
+<span>Wallet</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" onclick="showPage('analytics', this)">
+<i class="fa-solid fa-chart-line"></i>
+<span>Analytics</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="nav-section">
+<div class="nav-label">Social</div>
+<ul class="nav-links">
+<li class="nav-item">
+<a class="nav-link" onclick="showPage('social', this)">
+<i class="fa-solid fa-share-nodes"></i>
+<span>Social Links</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" onclick="showPage('kyc', this)">
+<i class="fa-solid fa-id-badge"></i>
+<span>Verification</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="nav-section">
+<div class="nav-label">Account</div>
+<ul class="nav-links">
+<li class="nav-item">
+<a class="nav-link" onclick="showPage('bank', this)">
+<i class="fa-solid fa-building-columns"></i>
+<span>Bank Details</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" onclick="showPage('settings', this)">
+<i class="fa-solid fa-sliders"></i>
+<span>Settings</span>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link logout-btn" onclick="handleLogout()">
+<i class="fa-solid fa-right-from-bracket"></i>
+<span>Log Out</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<!-- ==================== MAIN CONTENT ==================== -->
+<div class="main-content" id="mainContent">
+<!-- 1. DASHBOARD PAGE -->
+<section id="dashboard" class="page-section active">
+<div class="alert-card">
+<div class="alert-icon">
+<i class="fa-solid fa-triangle-exclamation"></i>
+</div>
+<div class="alert-content">
+<h4><i class="fa-solid fa-lock"></i> Complete Verification</h4>
+<p>Finish KYC to unlock instant withdrawals and start earning! 🔓</p>
+</div>
+<button class="btn btn-secondary btn-sm" onclick="showPage('kyc', document.querySelectorAll('.nav-link')[7])">
+<i class="fa-solid fa-bolt"></i> Verify Now
+</button>
+</div>
+<div class="stats-grid">
+<div class="card stat-card">
+<h3><i class="fa-solid fa-sack-dollar"></i> Total Earnings</h3>
+<div class="value">SAR 2,500</div>
+<div class="sub-text text-success">
+<i class="fa-solid fa-arrow-trend-up"></i>
+10% cashback on purchases
+</div>
+</div>
+<div class="card stat-card pink">
+<h3><i class="fa-solid fa-receipt"></i> Receipts Submitted</h3>
+<div class="value" id="receiptCount">12</div>
+<div class="sub-text">
+<i class="fa-solid fa-check-circle"></i>
+10 approved
+</div>
+</div>
+<div class="card stat-card green">
+<h3><i class="fa-solid fa-fire"></i> Active Collabs</h3>
+<div class="value">3</div>
+<div class="sub-text text-warning">
+<i class="fa-solid fa-clock"></i>
+1 pending approval
+</div>
+</div>
+<div class="card stat-card blue">
+<h3><i class="fa-solid fa-users"></i> Audience Reach</h3>
+<div class="value">55K</div>
+<div class="sub-text">
+<i class="fa-solid fa-heart"></i>
+Across all platforms
+</div>
+</div>
+</div>
+<div class="card">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
+<h3 style="font-size:1.3rem; font-weight:700;">
+<i class="fa-solid fa-chart-line" style="color:var(--primary);"></i>
+Earnings Over Time 📈
+</h3>
+<select style="padding: 10px 16px; border-radius: 12px; border: 2px solid var(--border); font-weight:600; min-width: 150px; background: var(--card); color: var(--text);">
+<option>Last 6 Months</option>
+<option>This Year</option>
+<option>All Time</option>
+</select>
+</div>
+<div class="chart-container">
+<div class="chart-glow"></div>
+<canvas id="revenueChart"></canvas>
+</div>
+</div>
+<div class="card">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
+<h3 style="font-size:1.3rem; font-weight:700;">
+<i class="fa-solid fa-receipt" style="color:var(--secondary);"></i>
+Recent Receipts
+</h3>
+<button class="btn btn-ghost btn-sm" style="padding: 10px 20px;" onclick="showPage('receipts', document.querySelectorAll('.nav-link')[1])">
+View All <i class="fa-solid fa-arrow-right"></i>
+</button>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Store</th>
+<th>Amount Spent</th>
+<th>Cashback</th>
+<th>Status</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody id="recentDropsTable">
+<tr>
+<td>
+<strong style="display:flex; align-items:center; gap:10px;">
+<i class="fa-brands fa-instagram" style="color:#E1306C;"></i>
+Starbucks
+</strong>
+<small style="color:var(--text-light); display:block; margin-top:4px;">Coffee & Vibes</small>
+</td>
+<td>SAR 45.00</td>
+<td style="color:var(--accent); font-weight:700;">+SAR 4.50</td>
+<td><span class="tag tag-new"><i class="fa-solid fa-check"></i> Approved</span></td>
+<td style="color:var(--text-light);">Mar 25</td>
+</tr>
+<tr>
+<td>
+<strong style="display:flex; align-items:center; gap:10px;">
+<i class="fa-solid fa-utensils" style="color:var(--warning);"></i>
+Nando's
+</strong>
+<small style="color:var(--text-light); display:block; margin-top:4px;">Food & Chill</small>
+</td>
+<td>SAR 120.00</td>
+<td style="color:var(--accent); font-weight:700;">+SAR 12.00</td>
+<td><span class="tag tag-time"><i class="fa-solid fa-clock"></i> Reviewing</span></td>
+<td style="color:var(--text-light);">Mar 24</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- 2. SNAP & EARN PAGE -->
+<section id="receipts" class="page-section">
+<div class="card">
+<h3 style="font-size:1.5rem; font-weight:800; margin-bottom:12px;">
+<i class="fa-solid fa-camera" style="color:var(--primary);"></i>
+Upload Receipt & Earn 💰
+</h3>
+<p style="color:var(--text-light); margin-bottom:28px; font-size:1.05rem;">
+Shop like normal, upload your receipt, tag us on social media, and get 10% cashback. It's that easy! 🔥
+</p>
+<div class="upload-zone" onclick="document.getElementById('receiptFile').click()">
+<i class="fa-solid fa-cloud-arrow-up"></i>
+<h4>Drop Your Receipt Here</h4>
+<p>JPG, PNG, or PDF • Max 10MB</p>
+<button class="btn btn-primary">
+<i class="fa-solid fa-folder-open"></i>
+Browse Files
+</button>
+<input type="file" id="receiptFile" hidden>
+</div>
+<form id="receiptForm" onsubmit="handleReceiptSubmit(event)">
+<div class="form-row">
+<div class="form-group">
+<label>Store Name 🛍️</label>
+<input type="text" id="shopName" placeholder="e.g. IKEA, Zara, Starbucks" required>
+</div>
+<div class="form-group">
+<label>Total Amount (SAR) 💸</label>
+<input type="number" id="shopAmount" placeholder="0.00" required>
+</div>
+</div>
+<div class="form-group">
+<label>Social Post Link 📱</label>
+<input type="text" placeholder="Paste your Instagram/TikTok post URL" required>
+<div class="input-hint">
+<i class="fa-solid fa-circle-info"></i>
+Must tag @FluenPay and the brand to get paid!
+</div>
+</div>
+<button class="btn btn-accent btn-lg btn-full" id="submitReceiptBtn" type="submit">
+<i class="fa-solid fa-paper-plane"></i>
+<span>Submit Receipt 🚀</span>
+</button>
+</form>
+</div>
+<div class="card" style="margin-top: 24px;">
+<h3 style="font-size:1.3rem; font-weight:700; margin-bottom:24px;">
+<i class="fa-solid fa-list-check" style="color:var(--accent);"></i>
+Receipt Status Tracker
+</h3>
+<div class="filters">
+<div class="filter-chip active" onclick="filterReceipts('all', this)">
+<i class="fa-solid fa-layer-group"></i> All
+</div>
+<div class="filter-chip" onclick="filterReceipts('approved', this)">
+<i class="fa-solid fa-check"></i> Approved
+</div>
+<div class="filter-chip" onclick="filterReceipts('pending', this)">
+<i class="fa-solid fa-clock"></i> Pending
+</div>
+<div class="filter-chip" onclick="filterReceipts('rejected', this)">
+<i class="fa-solid fa-xmark"></i> Rejected
+</div>
+</div>
+<div id="receiptStatusList">
+<div class="receipt-status-card">
+<div class="receipt-icon approved">
+<i class="fa-solid fa-check"></i>
+</div>
+<div class="receipt-details">
+<h5>Starbucks - Receipt #001</h5>
+<p>Uploaded on Mar 25, 2024</p>
+</div>
+<div class="receipt-amount">
+<div class="value">+SAR 4.50</div>
+<div class="status text-success">Approved</div>
+</div>
+</div>
+<div class="receipt-status-card">
+<div class="receipt-icon pending">
+<i class="fa-solid fa-clock"></i>
+</div>
+<div class="receipt-details">
+<h5>Nando's - Receipt #002</h5>
+<p>Uploaded on Mar 24, 2024</p>
+</div>
+<div class="receipt-amount">
+<div class="value">+SAR 12.00</div>
+<div class="status text-warning">Under Review</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. BRAND COLLABS PAGE -->
+<section id="campaigns" class="page-section">
+<div class="tabs">
+<div class="tab active" onclick="switchCampaignTab('available', this)">
+<i class="fa-solid fa-fire"></i> Available Collabs
+</div>
+<div class="tab" onclick="switchCampaignTab('active', this)">
+<i class="fa-solid fa-briefcase"></i> My Active Collabs
+</div>
+<div class="tab" onclick="switchCampaignTab('completed', this)">
+<i class="fa-solid fa-circle-check"></i> Completed
+</div>
+</div>
+<div id="availableCollabs">
+<div class="campaign-card">
+<div class="campaign-info">
+<h4>
+<i class="fa-solid fa-bolt" style="color:var(--warning);"></i>
+Flash Campaign: Tech Gadgets 🎧
+</h4>
+<p><strong>ElectroKSA</strong> • Electronics</p>
+<p>Promote our new headphones to your audience. 15% commission on every sale! 💪</p>
+<div class="tags">
+<span class="tag tag-hot"><i class="fa-solid fa-fire"></i> High Conversion</span>
+<span class="tag tag-time"><i class="fa-solid fa-clock"></i> 2 Days Left</span>
+</div>
+</div>
+<div style="text-align:right; min-width:150px;">
+<div style="font-size:2rem; font-weight:800; color:var(--primary); margin-bottom:8px;">15%</div>
+<small style="color:var(--text-light); display:block; margin-bottom:16px;">Commission</small>
+<button class="btn btn-primary btn-sm btn-full" onclick="applyCampaign(this)">
+<i class="fa-solid fa-bolt"></i>
+Apply Now
+</button>
+</div>
+</div>
+</div>
+<div id="activeCollabs" style="display:none;">
+<div class="campaign-card">
+<div class="campaign-info">
+<h4>
+<i class="fa-solid fa-gamepad" style="color:var(--accent);"></i>
+Gaming Accessories Promo 🎮
+</h4>
+<p><strong>GameZone KSA</strong> • Gaming</p>
+<div class="campaign-progress">
+<div class="progress-header">
+<span class="progress-label">Campaign Progress</span>
+<span class="progress-value">65%</span>
+</div>
+<div class="progress-track">
+<div class="fill" style="width: 65%;"></div>
+</div>
+</div>
+<div class="timeline">
+<div class="timeline-item completed">
+<div class="timeline-content">
+<h5>Application Approved ✅</h5>
+<p>Mar 15, 2024</p>
+</div>
+</div>
+<div class="timeline-item completed">
+<div class="timeline-content">
+<h5>Content Submitted 📤</h5>
+<p>Mar 20, 2024</p>
+</div>
+</div>
+<div class="timeline-item active">
+<div class="timeline-content">
+<h5>Brand Review 🔍</h5>
+<p>Expected by Mar 28</p>
+</div>
+</div>
+<div class="timeline-item pending">
+<div class="timeline-content">
+<h5>Payment Processing 💰</h5>
+<p>Pending completion</p>
+</div>
+</div>
+</div>
+</div>
+<div style="text-align:right; min-width:150px;">
+<div style="font-size:2rem; font-weight:800; color:var(--primary); margin-bottom:8px;">SAR 800</div>
+<small style="color:var(--text-light); display:block; margin-bottom:16px;">Earnings</small>
+<button class="btn btn-outline btn-sm btn-full">
+<i class="fa-solid fa-eye"></i>
+View Details
+</button>
+</div>
+</div>
+</div>
+<div id="completedCollabs" style="display:none;">
+<div class="campaign-card">
+<div class="campaign-info">
+<h4>
+<i class="fa-solid fa-mobile-screen" style="color:var(--secondary);"></i>
+Mobile App Launch 📱
+</h4>
+<p><strong>TechStart KSA</strong> • Technology</p>
+<div class="tags">
+<span class="tag tag-new"><i class="fa-solid fa-check"></i> Completed</span>
+</div>
+</div>
+<div style="text-align:right; min-width:150px;">
+<div style="font-size:2rem; font-weight:800; color:var(--accent); margin-bottom:8px;">SAR 1,200</div>
+<small style="color:var(--text-light); display:block; margin-bottom:16px;">Earned</small>
+<button class="btn btn-accent btn-sm btn-full">
+<i class="fa-solid fa-check"></i>
+Paid
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. WALLET PAGE -->
+<section id="wallet" class="page-section">
+<div class="wallet-hero" onclick="copyToClipboard('SAR 2,500.00')">
+<h3><i class="fa-solid fa-wallet"></i> Available Balance <i class="fa-regular fa-copy" style="font-size:0.8rem; opacity:0.7; margin-left:8px;"></i></h3>
+<div class="balance">SAR 2,500.00</div>
+<div class="wallet-actions">
+<button class="btn">
+<i class="fa-solid fa-building-columns"></i>
+Withdraw
+</button>
+<button class="btn">
+<i class="fa-solid fa-clock-rotate-left"></i>
+History
+</button>
+<button class="btn">
+<i class="fa-solid fa-qrcode"></i>
+QR Pay
+</button>
+</div>
+<p style="margin-top:20px; font-size:0.9rem; opacity:0.9; position:relative;">
+<i class="fa-solid fa-circle-info"></i>
+Instant withdrawal to Saudi banks • No fees! 🚀
+</p>
+</div>
+<div class="stats-grid">
+<div class="card stat-card">
+<h3><i class="fa-solid fa-hourglass-half"></i> Pending</h3>
+<div class="value">SAR 150</div>
+<div class="sub-text text-warning">
+<i class="fa-solid fa-clock"></i>
+Processing
+</div>
+</div>
+<div class="card stat-card green">
+<h3><i class="fa-solid fa-money-bill-transfer"></i> Total Withdrawn</h3>
+<div class="value">SAR 12K</div>
+<div class="sub-text">
+<i class="fa-solid fa-trophy"></i>
+Great job!
+</div>
+</div>
+</div>
+<div class="card">
+<h3 style="font-size:1.3rem; font-weight:700; margin-bottom:24px;">
+<i class="fa-solid fa-clock-rotate-left" style="color:var(--warning);"></i>
+Transaction History
+</h3>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>Type</th>
+<th>Amount</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<strong>Withdrawal to IBAN •••• 4400</strong>
+<div style="color:var(--text-light); font-size:0.85rem; margin-top:4px;">
+<i class="fa-solid fa-building-columns"></i> Al Rajhi Bank
+</div>
+</td>
+<td><span class="tag tag-hot"><i class="fa-solid fa-arrow-down"></i> Debit</span></td>
+<td style="color:var(--danger); font-weight:700;">-SAR 1,000</td>
+<td style="color:var(--text-light);">Mar 20</td>
+</tr>
+<tr>
+<td>
+<strong>Starbucks Receipt Cashback</strong>
+<div style="color:var(--text-light); font-size:0.85rem; margin-top:4px;">
+<i class="fa-solid fa-receipt"></i> Bill #PILL-001
+</div>
+</td>
+<td><span class="tag tag-new"><i class="fa-solid fa-arrow-up"></i> Credit</span></td>
+<td style="color:var(--accent); font-weight:700;">+SAR 4.50</td>
+<td style="color:var(--text-light);">Mar 25</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- 5. ANALYTICS PAGE -->
+<section id="analytics" class="page-section">
+<div class="stats-grid">
+<div class="card stat-card blue">
+<h3><i class="fa-solid fa-bullseye"></i> Total Impressions</h3>
+<div class="value">500K</div>
+<div class="sub-text">
+<i class="fa-solid fa-eye"></i>
+Content reach
+</div>
+</div>
+<div class="card stat-card pink">
+<h3><i class="fa-solid fa-heart"></i> Avg Engagement</h3>
+<div class="value">8.5%</div>
+<div class="sub-text text-success">
+<i class="fa-solid fa-arrow-trend-up"></i>
+Above average!
+</div>
+</div>
+<div class="card stat-card green">
+<h3><i class="fa-solid fa-users"></i> Total Followers</h3>
+<div class="value">55K</div>
+<div class="sub-text">
+<i class="fa-solid fa-plus"></i>
+All platforms
+</div>
+</div>
+<div class="card stat-card purple">
+<h3><i class="fa-solid fa-crown"></i> Creator Rank</h3>
+<div class="value">#42</div>
+<div class="sub-text text-pink">
+<i class="fa-solid fa-trophy"></i>
+Top 5% in KSA
+</div>
+</div>
+</div>
+<div class="card">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
+<h3 style="font-size:1.3rem; font-weight:700;">
+<i class="fa-solid fa-chart-pie" style="color:var(--secondary);"></i>
+Platform Performance 🎯
+</h3>
+<select style="padding: 10px 16px; border-radius: 12px; border: 2px solid var(--border); font-weight:600; min-width: 150px; background: var(--card); color: var(--text);">
+<option>This Month</option>
+<option>Last Month</option>
+<option>This Year</option>
+</select>
+</div>
+<div class="chart-container">
+<div class="chart-glow"></div>
+<canvas id="analyticsChart"></canvas>
+</div>
+</div>
+<div class="card">
+<h3 style="font-size:1.3rem; font-weight:700; margin-bottom:24px;">
+<i class="fa-solid fa-chart-area" style="color:var(--accent);"></i>
+Engagement Trends 📊
+</h3>
+<div class="chart-container">
+<div class="chart-glow"></div>
+<canvas id="engagementChart"></canvas>
+</div>
+</div>
+</section>
+<!-- 6. SOCIAL LINKS PAGE -->
+<section id="social" class="page-section">
+<div class="card">
+<h3 style="font-size:1.5rem; font-weight:800; margin-bottom:12px;">
+<i class="fa-solid fa-link" style="color:var(--primary);"></i>
+Connect Your Social Accounts 🔗
+</h3>
+<p style="color:var(--text-light); margin-bottom:32px;">
+Link your accounts to verify followers and unlock exclusive collabs! 🚀
+</p>
+<div class="social-grid">
+<div class="social-card">
+<div class="social-header">
+<div class="social-icon instagram">
+<i class="fa-brands fa-instagram"></i>
+</div>
+<div class="social-info">
+<h4>Instagram</h4>
+<p>Not connected</p>
+</div>
+</div>
+<button class="btn btn-outline btn-full" onclick="connectSocial(this)">
+<i class="fa-brands fa-instagram"></i>
+Connect
+</button>
+</div>
+<div class="social-card">
+<div class="social-header">
+<div class="social-icon tiktok">
+<i class="fa-brands fa-tiktok"></i>
+</div>
+<div class="social-info">
+<h4>TikTok</h4>
+<p>Not connected</p>
+</div>
+</div>
+<button class="btn btn-outline btn-full" onclick="connectSocial(this)">
+<i class="fa-brands fa-tiktok"></i>
+Connect
+</button>
+</div>
+<div class="social-card">
+<div class="social-header">
+<div class="social-icon youtube">
+<i class="fa-brands fa-youtube"></i>
+</div>
+<div class="social-info">
+<h4>YouTube</h4>
+<p>Not connected</p>
+</div>
+</div>
+<button class="btn btn-outline btn-full" onclick="connectSocial(this)">
+<i class="fa-brands fa-youtube"></i>
+Connect
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. VERIFICATION (KYC) PAGE -->
+<section id="kyc" class="page-section">
+<div class="card">
+<h3 style="font-size:1.5rem; font-weight:800; margin-bottom:12px;">
+<i class="fa-solid fa-shield-halved" style="color:var(--accent);"></i>
+Identity Verification 🔐
+</h3>
+<p style="color:var(--text-light); margin-bottom:32px;">
+Required for withdrawals to Saudi banks. Takes 24-48 hours! ⏰
+</p>
+<form onsubmit="handleKYCSubmit(event)">
+<div class="form-group">
+<label>National ID / Iqama Number 🇸🇦</label>
+<input type="text" placeholder="10xxxxxxxxx" style="font-family:monospace; font-size:1.1rem;" required>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label>Upload ID (Front) 📸</label>
+<input type="file" style="padding:16px; border:2px dashed var(--border); border-radius:16px;" required>
+</div>
+<div class="form-group">
+<label>Upload ID (Back) 📸</label>
+<input type="file" style="padding:16px; border:2px dashed var(--border); border-radius:16px;" required>
+</div>
+</div>
+<div class="form-group">
+<label>Selfie Verification 🤳</label>
+<input type="file" style="padding:16px; border:2px dashed var(--border); border-radius:16px;" required>
+<div class="input-hint">
+<i class="fa-solid fa-circle-info"></i>
+Make sure your face is clearly visible and well-lit
+</div>
+</div>
+<button class="btn btn-primary btn-lg btn-full" type="submit">
+<i class="fa-solid fa-paper-plane"></i>
+Submit for Verification
+</button>
+</form>
+</div>
+</section>
+<!-- 8. BANK DETAILS PAGE -->
+<section id="bank" class="page-section">
+<div class="card">
+<h3 style="font-size:1.5rem; font-weight:800; margin-bottom:12px;">
+<i class="fa-solid fa-building-columns" style="color:var(--primary);"></i>
+Bank Account Information 💰
+</h3>
+<p style="color:var(--text-light); margin-bottom:32px;">
+Ensure IBAN matches your verified name or payments will fail! ⚠️
+</p>
+<form onsubmit="handleBankSubmit(event)">
+<div class="form-group">
+<label>IBAN (Saudi Arabia) 🇸🇦</label>
+<input type="text" id="ibanInput" placeholder="SAxx xxxx xxxx xxxx xxxx xxxx" style="font-family:monospace; letter-spacing:1px;" required>
+<div class="input-hint">
+<i class="fa-solid fa-circle-info"></i>
+Must start with SA + 22 digits (24 characters total)
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label>Bank Name 🏦</label>
+<select required>
+<option value="">Select Your Bank</option>
+<option>Al Rajhi Bank</option>
+<option>Saudi National Bank (SNB)</option>
+<option>Riyad Bank</option>
+<option>Alinma Bank</option>
+<option>Bank AlJazira</option>
+<option>SABB</option>
+</select>
+</div>
+<div class="form-group">
+<label>Account Nickname (Optional) 🏷️</label>
+<input type="text" placeholder="e.g. Main Account">
+</div>
+</div>
+<button class="btn btn-success btn-lg btn-full" type="submit" style="background:var(--accent); color:white;">
+<i class="fa-solid fa-check"></i>
+Save Bank Details
+</button>
+</form>
+</div>
+</section>
+<!-- 9. SETTINGS PAGE -->
+<section id="settings" class="page-section">
+<div class="card">
+<h3 style="font-size:1.5rem; font-weight:800; margin-bottom:24px;">
+<i class="fa-solid fa-sliders" style="color:var(--primary);"></i>
+Account Settings ⚙️
+</h3>
+<div class="settings-section">
+<h4><i class="fa-solid fa-bell"></i> Notifications</h4>
+<div class="setting-item">
+<div class="setting-info">
+<h5>Email Notifications</h5>
+<p>Receive updates about earnings and campaigns</p>
+</div>
+<label class="toggle-switch">
+<input type="checkbox" checked>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="setting-item">
+<div class="setting-info">
+<h5>Push Notifications</h5>
+<p>Get instant alerts on your device</p>
+</div>
+<label class="toggle-switch">
+<input type="checkbox" checked>
+<span class="toggle-slider"></span>
+</label>
+</div>
+</div>
+<div class="settings-section">
+<h4><i class="fa-solid fa-lock"></i> Security</h4>
+<div class="setting-item">
+<div class="setting-info">
+<h5>Two-Factor Authentication</h5>
+<p>Add an extra layer of security to your account</p>
+</div>
+<label class="toggle-switch">
+<input type="checkbox">
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="setting-item">
+<div class="setting-info">
+<h5>Login Alerts</h5>
+<p>Get notified when someone logs into your account</p>
+</div>
+<label class="toggle-switch">
+<input type="checkbox" checked>
+<span class="toggle-slider"></span>
+</label>
+</div>
+</div>
+<div class="settings-section">
+<h4><i class="fa-solid fa-globe"></i> Preferences</h4>
+<div class="setting-item">
+<div class="setting-info">
+<h5>Dark Mode</h5>
+<p>Switch between light and dark themes</p>
+</div>
+<label class="toggle-switch">
+<input type="checkbox" id="settingsDarkMode" onchange="toggleTheme()">
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="setting-item">
+<div class="setting-info">
+<h5>Language</h5>
+<p>Choose your preferred language</p>
+</div>
+<select style="padding: 10px 16px; border-radius: 12px; border: 2px solid var(--border); min-width: 150px;">
+<option>English</option>
+<option>Arabic</option>
+</select>
+</div>
+</div>
+<div class="danger-zone">
+<h4><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone</h4>
+<p>These actions are permanent and cannot be undone.</p>
+<div style="display:flex; gap:12px; flex-wrap:wrap;">
+<button class="btn btn-outline btn-sm" style="border-color:var(--danger); color:var(--danger);" onclick="showModal('deactivateModal')">
+<i class="fa-solid fa-pause"></i>
+Deactivate Account
+</button>
+<button class="btn btn-danger btn-sm" onclick="showModal('deleteModal')">
+<i class="fa-solid fa-trash"></i>
+Delete Account
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Modals -->
+<div class="modal-overlay" id="deactivateModal">
+<div class="modal">
+<div class="modal-header">
+<h3>Deactivate Account</h3>
+<button class="modal-close" onclick="closeModal('deactivateModal')">&times;</button>
+</div>
+<p style="color:var(--text-light); margin-bottom:24px;">
+Your account will be deactivated but can be reactivated within 30 days.
+</p>
+<div style="display:flex; gap:12px;">
+<button class="btn btn-outline btn-full" onclick="closeModal('deactivateModal')">Cancel</button>
+<button class="btn btn-primary btn-full" onclick="showToast('Account deactivated.', 'success'); closeModal('deactivateModal')">Deactivate</button>
+</div>
+</div>
+</div>
+<div class="modal-overlay" id="deleteModal">
+<div class="modal">
+<div class="modal-header">
+<h3 style="color:var(--danger);">Delete Account</h3>
+<button class="modal-close" onclick="closeModal('deleteModal')">&times;</button>
+</div>
+<p style="color:var(--text-light); margin-bottom:24px;">
+This action is permanent! All your data will be deleted forever.
+</p>
+<div class="form-group">
+<label>Type "DELETE" to confirm</label>
+<input type="text" id="deleteConfirm" placeholder="Type DELETE">
+</div>
+<div style="display:flex; gap:12px;">
+<button class="btn btn-outline btn-full" onclick="closeModal('deleteModal')">Cancel</button>
+<button class="btn btn-danger btn-full" onclick="validateDelete()">Delete Forever</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation for Mobile -->
+<div class="bottom-nav">
+<a class="bottom-nav-item active" onclick="showPage('dashboard', this)">
+<i class="fa-solid fa-house"></i>
+<span>Home</span>
+</a>
+<a class="bottom-nav-item" onclick="showPage('receipts', this)">
+<i class="fa-solid fa-camera"></i>
+<span>Snap</span>
+</a>
+<a class="bottom-nav-item" onclick="showPage('wallet', this)">
+<i class="fa-solid fa-coins"></i>
+<span>Wallet</span>
+</a>
+<a class="bottom-nav-item" onclick="showPage('settings', this)">
+<i class="fa-solid fa-sliders"></i>
+<span>Settings</span>
+</a>
+</div>
+<script>
+// ==================== AUTH FUNCTIONS ====================
+let currentUser = null;
+function checkAuth() {
+const savedUser = localStorage.getItem('fluenpay_user');
+if (savedUser) {
+currentUser = JSON.parse(savedUser);
+// Remove active class to show dashboard if logged in
+document.getElementById('authContainer').classList.remove('active');
+} else {
+// Keep active class to show login if logged out
+document.getElementById('authContainer').classList.add('active');
+}
+}
+function showLogin() {
+document.getElementById('loginForm').style.display = 'block';
+document.getElementById('signupForm').style.display = 'none';
+}
+function showSignup() {
+document.getElementById('loginForm').style.display = 'none';
+document.getElementById('signupForm').style.display = 'block';
+}
+function togglePassword(inputId, icon) {
+const input = document.getElementById(inputId);
+if (input.type === 'password') {
+input.type = 'text';
+icon.classList.remove('fa-eye');
+icon.classList.add('fa-eye-slash');
+} else {
+input.type = 'password';
+icon.classList.remove('fa-eye-slash');
+icon.classList.add('fa-eye');
+}
+}
+async function handleLogin(event) {
+event.preventDefault();
+const btn = document.getElementById('loginBtn');
+const email = document.getElementById('loginEmail').value;
+const password = document.getElementById('loginPassword').value;
+btn.disabled = true;
+btn.innerHTML = '<div class="spinner"></div> Signing In...';
+await new Promise(resolve => setTimeout(resolve, 1500));
+if (email && password.length >= 8) {
+currentUser = { email: email, name: email.split('@')[0] };
+localStorage.setItem('fluenpay_user', JSON.stringify(currentUser));
+document.getElementById('authContainer').classList.remove('active');
+showToast('Welcome back! 🎉', 'success');
+}
+btn.disabled = false;
+btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i><span>Sign In</span>';
+}
+async function handleSignup(event) {
+event.preventDefault();
+const btn = document.getElementById('signupBtn');
+const email = document.getElementById('signupEmail').value;
+const password = document.getElementById('signupPassword').value;
+btn.disabled = true;
+btn.innerHTML = '<div class="spinner"></div> Creating Account...';
+await new Promise(resolve => setTimeout(resolve, 1500));
+currentUser = { email: email, name: email.split('@')[0] };
+localStorage.setItem('fluenpay_user', JSON.stringify(currentUser));
+document.getElementById('authContainer').classList.remove('active');
+showToast('Account created! 🚀', 'success');
+btn.disabled = false;
+btn.innerHTML = '<i class="fa-solid fa-user-plus"></i><span>Create Account</span>';
+}
+function socialLogin(provider) {
+showToast(`${provider} login coming soon!`, 'success');
+}
+function handleLogout() {
+localStorage.removeItem('fluenpay_user');
+currentUser = null;
+document.getElementById('authContainer').classList.add('active');
+showToast('Logged out successfully! 👋', 'success');
+}
+// ==================== SIDEBAR FUNCTIONS ====================
+function toggleSidebar() {
+if (window.innerWidth <= 768) {
+// Mobile - toggle sidebar visibility
+const sidebar = document.getElementById('sidebar');
+const overlay = document.querySelector('.mobile-overlay');
+sidebar.classList.toggle('open');
+overlay.classList.toggle('active');
+} else {
+// Desktop - toggle collapsed state
+const sidebar = document.getElementById('sidebar');
+const topNav = document.getElementById('topNav');
+const mainContent = document.getElementById('mainContent');
+const toggleIcon = document.getElementById('sidebarToggleIcon');
+sidebar.classList.toggle('collapsed');
+topNav.classList.toggle('collapsed');
+mainContent.classList.toggle('collapsed');
+if (sidebar.classList.contains('collapsed')) {
+toggleIcon.classList.remove('fa-bars');
+toggleIcon.classList.add('fa-bars-staggered');
+localStorage.setItem('sidebarCollapsed', 'true');
+} else {
+toggleIcon.classList.remove('fa-bars-staggered');
+toggleIcon.classList.add('fa-bars');
+localStorage.setItem('sidebarCollapsed', 'false');
+}
+setTimeout(() => {
+if(revenueChart) revenueChart.resize();
+if(analyticsChart) analyticsChart.resize();
+if(engagementChart) engagementChart.resize();
+}, 350);
+}
+}
+if(localStorage.getItem('sidebarCollapsed') === 'true' && window.innerWidth > 768) {
+document.getElementById('sidebar').classList.add('collapsed');
+document.getElementById('topNav').classList.add('collapsed');
+document.getElementById('mainContent').classList.add('collapsed');
+document.getElementById('sidebarToggleIcon').classList.remove('fa-bars');
+document.getElementById('sidebarToggleIcon').classList.add('fa-bars-staggered');
+}
+function toggleMobileMenu() {
+const sidebar = document.getElementById('sidebar');
+const overlay = document.querySelector('.mobile-overlay');
+sidebar.classList.remove('open');
+overlay.classList.remove('active');
+}
+// ==================== NOTIFICATIONS FUNCTIONS ====================
+const notificationsData = [
+{
+id: 1,
+type: 'earnings',
+icon: 'fa-sack-dollar',
+title: 'New Cashback Received!',
+message: 'You earned SAR 4.50 from Starbucks receipt',
+time: '5 minutes ago',
+unread: true
+},
+{
+id: 2,
+type: 'campaign',
+icon: 'fa-handshake',
+title: 'Campaign Approved',
+message: 'Your Gaming Accessories campaign was approved',
+time: '2 hours ago',
+unread: true
+},
+{
+id: 3,
+type: 'payment',
+icon: 'fa-building-columns',
+title: 'Withdrawal Processed',
+message: 'SAR 1,000 has been sent to your bank account',
+time: '1 day ago',
+unread: true
+},
+{
+id: 4,
+type: 'system',
+icon: 'fa-shield-halved',
+title: 'Verification Reminder',
+message: 'Complete KYC to unlock instant withdrawals',
+time: '2 days ago',
+unread: true
+},
+{
+id: 5,
+type: 'earnings',
+icon: 'fa-receipt',
+title: 'Receipt Approved',
+message: 'Your Nando\'s receipt was approved (+SAR 12.00)',
+time: '3 days ago',
+unread: true
+}
+];
+function toggleNotifications() {
+const panel = document.getElementById('notificationsPanel');
+panel.classList.toggle('active');
+if(panel.classList.contains('active')) {
+loadNotifications();
+}
+}
+function loadNotifications() {
+const list = document.getElementById('notificationsList');
+list.innerHTML = '';
+notificationsData.forEach(notif => {
+const item = document.createElement('div');
+item.className = `notification-item ${notif.unread ? 'unread' : ''}`;
+item.onclick = () => markAsRead(notif.id);
+item.innerHTML = `
+<div class="notification-icon ${notif.type}">
+<i class="fa-solid ${notif.icon}"></i>
+</div>
+<div class="notification-content">
+<h4>${notif.title}</h4>
+<p>${notif.message}</p>
+<span class="notification-time">${notif.time}</span>
+</div>
+`;
+list.appendChild(item);
+});
+updateNotificationBadge();
+}
+function markAsRead(id) {
+const notif = notificationsData.find(n => n.id === id);
+if(notif) {
+notif.unread = false;
+loadNotifications();
+}
+}
+function markAllRead() {
+notificationsData.forEach(n => n.unread = false);
+loadNotifications();
+showToast('All notifications marked as read', 'success');
+}
+function updateNotificationBadge() {
+const badge = document.getElementById('notificationBadge');
+const unreadCount = notificationsData.filter(n => n.unread).length;
+badge.textContent = unreadCount;
+badge.style.display = unreadCount > 0 ? 'block' : 'none';
+}
+// ==================== THEME FUNCTIONS ====================
+function toggleTheme() {
+const body = document.body;
+const icons = document.querySelectorAll('.theme-toggle i');
+const settingsToggle = document.getElementById('settingsDarkMode');
+body.classList.toggle('dark-mode');
+if(body.classList.contains('dark-mode')) {
+icons.forEach(icon => {
+icon.classList.remove('fa-moon');
+icon.classList.add('fa-sun');
+});
+if(settingsToggle) settingsToggle.checked = true;
+localStorage.setItem('theme', 'dark');
+} else {
+icons.forEach(icon => {
+icon.classList.remove('fa-sun');
+icon.classList.add('fa-moon');
+});
+if(settingsToggle) settingsToggle.checked = false;
+localStorage.setItem('theme', 'light');
+}
+updateChartsTheme();
+}
+if(localStorage.getItem('theme') === 'dark') {
+document.body.classList.add('dark-mode');
+document.querySelectorAll('.theme-toggle i').forEach(icon => {
+icon.classList.replace('fa-moon', 'fa-sun');
+});
+if(document.getElementById('settingsDarkMode')) {
+document.getElementById('settingsDarkMode').checked = true;
+}
+}
+// ==================== TOAST NOTIFICATIONS ====================
+function showToast(message, type = 'success') {
+const container = document.getElementById('toastContainer');
+const toast = document.createElement('div');
+toast.className = `toast ${type}`;
+const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+container.appendChild(toast);
+setTimeout(() => {
+toast.style.animation = 'slideOut 0.3s forwards';
+setTimeout(() => toast.remove(), 300);
+}, 3000);
+}
+function copyToClipboard(text) {
+navigator.clipboard.writeText(text).then(() => {
+showToast('Copied to Clipboard! 📋', 'success');
+});
+}
+// ==================== PAGE NAVIGATION ====================
+function showPage(pageId, element) {
+// Close mobile sidebar if open
+if (window.innerWidth <= 768) {
+const sidebar = document.getElementById('sidebar');
+const overlay = document.querySelector('.mobile-overlay');
+sidebar.classList.remove('open');
+overlay.classList.remove('active');
+}
+// Hide all sections
+document.querySelectorAll('.page-section').forEach(section => {
+section.classList.remove('active');
+});
+// Show target section
+document.getElementById(pageId).classList.add('active');
+// Update sidebar active state
+document.querySelectorAll('.nav-link').forEach(link => {
+link.classList.remove('active');
+});
+if(element) element.classList.add('active');
+// Update bottom nav active state
+document.querySelectorAll('.bottom-nav-item').forEach(item => {
+item.classList.remove('active');
+});
+const bottomNavMap = {'dashboard':0, 'receipts':1, 'wallet':2, 'settings':3};
+if(bottomNavMap[pageId] !== undefined) {
+document.querySelectorAll('.bottom-nav-item')[bottomNavMap[pageId]].classList.add('active');
+}
+// Update page titles
+const titles = {
+'dashboard': { title: 'Dashboard', subtitle: 'Welcome back! Here\'s what\'s happening 🎉' },
+'receipts': { title: 'Snap & Earn', subtitle: 'Upload receipts, get cashback! 🔥' },
+'campaigns': { title: 'Brand Collabs', subtitle: 'Find amazing brands to partner with 🚀' },
+'wallet': { title: 'Wallet', subtitle: 'Your earnings, withdraw anytime! 💰' },
+'analytics': { title: 'Analytics', subtitle: 'Track your performance 📊' },
+'social': { title: 'Social Links', subtitle: 'Connect your platforms 🔗' },
+'kyc': { title: 'Verification', subtitle: 'Complete to unlock withdrawals 🔐' },
+'bank': { title: 'Bank Details', subtitle: 'Where we send your money 🏦' },
+'settings': { title: 'Settings', subtitle: 'Customize your experience ⚙️' }
+};
+if(titles[pageId]) {
+document.getElementById('topNavTitle').innerText = titles[pageId].title;
+document.getElementById('topNavSubtitle').innerText = titles[pageId].subtitle;
+}
+// Scroll to top
+document.querySelector('.main-content').scrollTop = 0;
+// Initialize charts if needed
+setTimeout(() => {
+if(pageId === 'analytics') {
+initAnalyticsCharts();
+}
+}, 100);
+}
+// ==================== CAMPAIGN FUNCTIONS ====================
+function switchCampaignTab(tab, element) {
+document.querySelectorAll('#campaigns .tab').forEach(tab => tab.classList.remove('active'));
+element.classList.add('active');
+document.getElementById('availableCollabs').style.display = 'none';
+document.getElementById('activeCollabs').style.display = 'none';
+document.getElementById('completedCollabs').style.display = 'none';
+if(tab === 'available') {
+document.getElementById('availableCollabs').style.display = 'block';
+} else if(tab === 'active') {
+document.getElementById('activeCollabs').style.display = 'block';
+} else if(tab === 'completed') {
+document.getElementById('completedCollabs').style.display = 'block';
+}
+}
+function applyCampaign(btn) {
+const originalText = btn.innerHTML;
+btn.innerHTML = '<div class="spinner"></div>';
+setTimeout(() => {
+btn.innerHTML = '<i class="fa-solid fa-check"></i> Applied';
+btn.classList.remove('btn-primary', 'btn-outline');
+btn.classList.add('btn-accent');
+btn.disabled = true;
+showToast('Application submitted! 🤞', 'success');
+}, 1000);
+}
+function connectSocial(btn) {
+const originalText = btn.innerHTML;
+btn.innerHTML = '<div class="spinner"></div>';
+setTimeout(() => {
+btn.innerHTML = '<i class="fa-solid fa-check"></i> Connected';
+btn.classList.remove('btn-outline');
+btn.classList.add('btn-accent');
+btn.disabled = true;
+showToast('Account connected! 🔗', 'success');
+}, 1000);
+}
+function filterReceipts(filter, element) {
+document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+element.classList.add('active');
+showToast(`Showing ${filter} receipts`, 'success');
+}
+async function handleReceiptSubmit(e) {
+e.preventDefault();
+const btn = document.getElementById('submitReceiptBtn');
+const originalText = btn.innerHTML;
+btn.innerHTML = '<div class="spinner"></div> Processing...';
+btn.disabled = true;
+await new Promise(resolve => setTimeout(resolve, 1500));
+const countEl = document.getElementById('receiptCount');
+countEl.innerText = parseInt(countEl.innerText) + 1;
+btn.innerHTML = originalText;
+btn.disabled = false;
+document.getElementById('receiptForm').reset();
+showToast('Receipt uploaded! 🚀', 'success');
+showPage('dashboard', document.querySelectorAll('.nav-link')[0]);
+}
+async function handleKYCSubmit(e) {
+e.preventDefault();
+const btn = e.target.querySelector('button[type="submit"]');
+const originalText = btn.innerHTML;
+btn.innerHTML = '<div class="spinner"></div> Submitting...';
+btn.disabled = true;
+await new Promise(resolve => setTimeout(resolve, 1500));
+btn.innerHTML = originalText;
+btn.disabled = false;
+showToast('Verification submitted! 📧', 'success');
+}
+async function handleBankSubmit(e) {
+e.preventDefault();
+const btn = e.target.querySelector('button[type="submit"]');
+const originalText = btn.innerHTML;
+btn.innerHTML = '<div class="spinner"></div> Saving...';
+btn.disabled = true;
+await new Promise(resolve => setTimeout(resolve, 1500));
+btn.innerHTML = originalText;
+btn.disabled = false;
+showToast('Bank details saved! 💰', 'success');
+}
+// ==================== MODAL FUNCTIONS ====================
+function showModal(modalId) {
+document.getElementById(modalId).classList.add('active');
+}
+function closeModal(modalId) {
+document.getElementById(modalId).classList.remove('active');
+}
+function validateDelete() {
+const input = document.getElementById('deleteConfirm').value;
+if(input === 'DELETE') {
+showToast('Account deletion initiated.', 'error');
+closeModal('deleteModal');
+} else {
+showToast('Please type DELETE to confirm', 'error');
+}
+}
+// ==================== CHART FUNCTIONS ====================
+let revenueChart, analyticsChart, engagementChart;
+function updateChartsTheme() {
+const isDark = document.body.classList.contains('dark-mode');
+const gridColor = isDark ? '#334155' : '#f1f5f9';
+const textColor = isDark ? '#f1f5f9' : '#1e293b';
+[revenueChart, analyticsChart, engagementChart].forEach(chart => {
+if(chart) {
+chart.options.scales.y.grid.color = gridColor;
+chart.options.scales.x.grid.color = gridColor;
+chart.options.plugins.tooltip.backgroundColor = isDark ? '#1e293b' : '#ffffff';
+chart.options.plugins.tooltip.titleColor = textColor;
+chart.options.plugins.tooltip.bodyColor = textColor;
+chart.update();
+}
+});
+}
+function initCharts() {
+// Revenue Chart - Dashboard
+const ctxRev = document.getElementById('revenueChart');
+if(ctxRev) {
+const gradientRev = ctxRev.getContext('2d').createLinearGradient(0, 0, 0, 300);
+gradientRev.addColorStop(0, 'rgba(99, 102, 241, 0.4)');
+gradientRev.addColorStop(1, 'rgba(99, 102, 241, 0.01)');
+revenueChart = new Chart(ctxRev, {
+type: 'line',
+data: {
+labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+datasets: [{
+label: 'Commission Earned (SAR)',
+data: [150, 300, 250, 400, 350, 500],
+borderColor: '#6366f1',
+backgroundColor: gradientRev,
+fill: true,
+tension: 0.4,
+borderWidth: 4,
+pointBackgroundColor: '#6366f1',
+pointBorderColor: '#fff',
+pointBorderWidth: 3,
+pointRadius: 8,
+pointHoverRadius: 12
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+animation: { duration: 2000, easing: 'easeOutQuart' },
+plugins: {
+legend: { display: false },
+tooltip: {
+backgroundColor: '#1e293b',
+padding: 16,
+cornerRadius: 16,
+titleFont: { family: 'Plus Jakarta Sans', size: 14, weight: '700' },
+bodyFont: { family: 'Plus Jakarta Sans', size: 13 },
+displayColors: false,
+callbacks: {
+label: function(context) {
+return 'SAR ' + context.parsed.y.toLocaleString();
+}
+}
+}
+},
+scales: {
+y: {
+beginAtZero: true,
+grid: { color: '#f1f5f9', drawBorder: false, lineWidth: 1 },
+ticks: { font: { family: 'Plus Jakarta Sans', weight: '600' }, color: '#64748b', padding: 8 }
+},
+x: {
+grid: { display: false, drawBorder: false },
+ticks: { font: { family: 'Plus Jakarta Sans', weight: '600' }, color: '#64748b', padding: 8 }
+}
+}
+}
+});
+}
+}
+function initAnalyticsCharts() {
+// Platform Performance Chart - Analytics Page
+const ctxAna = document.getElementById('analyticsChart');
+if(ctxAna && !analyticsChart) {
+analyticsChart = new Chart(ctxAna, {
+type: 'bar',
+data: {
+labels: ['Instagram', 'TikTok', 'Snapchat', 'YouTube', 'Twitter'],
+datasets: [{
+label: 'Engagement Rate',
+data: [8.5, 12.0, 5.5, 6.8, 4.2],
+backgroundColor: ['#ec4899', '#0f172a', '#fbbf24', '#ef4444', '#3b82f6'],
+borderRadius: 16,
+borderSkipped: false,
+barThickness: 50
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+animation: { duration: 2000, easing: 'easeOutQuart' },
+plugins: {
+legend: { display: false },
+tooltip: {
+backgroundColor: '#1e293b',
+padding: 16,
+cornerRadius: 16,
+titleFont: { family: 'Plus Jakarta Sans', size: 14, weight: '700' },
+bodyFont: { family: 'Plus Jakarta Sans', size: 13 },
+displayColors: false
+}
+},
+scales: {
+y: {
+beginAtZero: true,
+grid: { color: '#f1f5f9', drawBorder: false, lineWidth: 1 },
+ticks: { font: { family: 'Plus Jakarta Sans', weight: '600' }, color: '#64748b', padding: 8 }
+},
+x: {
+grid: { display: false, drawBorder: false },
+ticks: { font: { family: 'Plus Jakarta Sans', weight: '600' }, color: '#64748b', padding: 8 }
+}
+}
+}
+});
+}
+// Engagement Trends Chart - Analytics Page
+const ctxEng = document.getElementById('engagementChart');
+if(ctxEng && !engagementChart) {
+const gradientEng = ctxEng.getContext('2d').createLinearGradient(0, 0, 0, 300);
+gradientEng.addColorStop(0, 'rgba(236, 72, 153, 0.4)');
+gradientEng.addColorStop(1, 'rgba(236, 72, 153, 0.01)');
+engagementChart = new Chart(ctxEng, {
+type: 'line',
+data: {
+labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+datasets: [
+{
+label: 'Likes',
+data: [1200, 1800, 1500, 2200],
+borderColor: '#ec4899',
+backgroundColor: gradientEng,
+fill: true,
+tension: 0.4,
+borderWidth: 3,
+pointRadius: 6,
+pointHoverRadius: 10
+},
+{
+label: 'Comments',
+data: [150, 220, 180, 300],
+borderColor: '#10b981',
+backgroundColor: 'rgba(16, 185, 129, 0.1)',
+fill: true,
+tension: 0.4,
+borderWidth: 3,
+pointRadius: 6,
+pointHoverRadius: 10
+},
+{
+label: 'Shares',
+data: [80, 120, 95, 150],
+borderColor: '#f59e0b',
+backgroundColor: 'rgba(245, 158, 11, 0.1)',
+fill: true,
+tension: 0.4,
+borderWidth: 3,
+pointRadius: 6,
+pointHoverRadius: 10
+}
+]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+animation: { duration: 2000, easing: 'easeOutQuart' },
+plugins: {
+legend: {
+display: true,
+position: 'top',
+labels: {
+font: { family: 'Plus Jakarta Sans', weight: '600' },
+usePointStyle: true,
+pointStyle: 'circle',
+padding: 20
+}
+},
+tooltip: {
+backgroundColor: '#1e293b',
+padding: 16,
+cornerRadius: 16,
+titleFont: { family: 'Plus Jakarta Sans', size: 14, weight: '700' },
+bodyFont: { family: 'Plus Jakarta Sans', size: 13 },
+displayColors: true
+}
+},
+scales: {
+y: {
+beginAtZero: true,
+grid: { color: '#f1f5f9', drawBorder: false, lineWidth: 1 },
+ticks: { font: { family: 'Plus Jakarta Sans', weight: '600' }, color: '#64748b', padding: 8 }
+},
+x: {
+grid: { display: false, drawBorder: false },
+ticks: { font: { family: 'Plus Jakarta Sans', weight: '600' }, color: '#64748b', padding: 8 }
+}
+}
+}
+});
+}
+}
+// ==================== INITIALIZATION ====================
+document.addEventListener('DOMContentLoaded', function() {
+checkAuth();
+initCharts();
+updateNotificationBadge();
+});
+window.addEventListener('resize', function() {
+if (window.innerWidth > 768) {
+document.getElementById('sidebar').classList.remove('open');
+document.querySelector('.mobile-overlay').classList.remove('active');
+}
+setTimeout(() => {
+if(revenueChart) revenueChart.resize();
+if(analyticsChart) analyticsChart.resize();
+if(engagementChart) engagementChart.resize();
+}, 100);
+});
+// Close notifications when clicking outside
+document.addEventListener('click', function(event) {
+const panel = document.getElementById('notificationsPanel');
+const btn = document.querySelector('.notification-btn');
+if (!panel.contains(event.target) && !btn.contains(event.target) && panel.classList.contains('active')) {
+panel.classList.remove('active');
+}
+});
+</script>
+</body>
+</html>
