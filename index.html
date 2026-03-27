@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>FluenPay - Your Creator Hub</title>
+<title>FluenPay - Creator Hub</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -633,7 +633,7 @@ left: 0;
 top: 0;
 height: 100vh;
 z-index: 999;
-transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .sidebar.collapsed {
 width: var(--sidebar-collapsed-width);
@@ -1724,59 +1724,91 @@ grid-template-columns: 1fr;
 display: none;
 }
 .auth-right {
-padding: 40px 24px;
+padding: 30px 20px;
+}
+.auth-title {
+font-size: 1.5rem;
+}
+.auth-logo {
+font-size: 1.5rem;
+margin-bottom: 24px;
 }
 .top-nav {
 left: 0 !important;
-padding: 0 16px;
+padding: 0 12px;
+height: 60px;
 }
 .top-nav.collapsed {
 left: 0 !important;
 }
+.page-title-top h1 {
+font-size: 1.1rem;
+}
+.page-title-top p {
+font-size: 0.75rem;
+display: none;
+}
 .sidebar {
 transform: translateX(-100%);
+width: 260px;
 }
 .sidebar.open {
 transform: translateX(0);
 }
 .sidebar.collapsed {
-width: var(--sidebar-width);
+width: 260px;
+transform: translateX(-100%);
+}
+.mobile-overlay.active {
+display: block;
 }
 .main-content {
 margin-left: 0 !important;
-padding: 80px 16px 16px;
+padding: 70px 12px 80px;
 }
 .main-content.collapsed {
 margin-left: 0 !important;
 }
 .page-title h1 {
-font-size: 1.4rem;
+font-size: 1.25rem;
 }
 .page-title p {
-font-size: 0.875rem;
+font-size: 0.8rem;
 }
 .stats-grid {
 grid-template-columns: 1fr;
-gap: 16px;
+gap: 12px;
+margin-bottom: 20px;
+}
+.stat-card {
+padding: 20px;
 }
 .stat-card .value {
 font-size: 1.6rem;
 }
+.stat-card h3 {
+font-size: 0.75rem;
+}
 .card {
 padding: 20px;
 border-radius: 20px;
+margin-bottom: 16px;
 }
 .wallet-hero {
-padding: 24px;
+padding: 20px;
+border-radius: 24px;
+margin-bottom: 20px;
 }
 .wallet-hero .balance {
 font-size: 2rem;
 }
 .wallet-actions {
 flex-direction: column;
+gap: 8px;
 }
 .wallet-actions .btn {
 width: 100%;
+padding: 12px;
 }
 .bottom-nav {
 display: flex;
@@ -1785,11 +1817,113 @@ display: flex;
 padding-bottom: 80px;
 }
 .chart-container {
-height: 280px;
+height: 250px;
+padding: 12px;
 }
 .notifications-panel {
+width: calc(100% - 24px);
+right: 12px;
+top: 60px;
+}
+.alert-card {
+padding: 16px;
+margin-bottom: 20px;
+}
+.alert-icon {
+width: 48px;
+height: 48px;
+font-size: 1.2rem;
+}
+.alert-content h4 {
+font-size: 0.9rem;
+}
+.alert-content p {
+font-size: 0.8rem;
+}
+.upload-zone {
+padding: 30px 20px;
+min-height: 150px;
+}
+.upload-zone i {
+font-size: 3rem;
+}
+.upload-zone h4 {
+font-size: 1.1rem;
+}
+.campaign-card {
+padding: 20px;
+margin-bottom: 16px;
+}
+.campaign-info h4 {
+font-size: 1rem;
+}
+.campaign-info p {
+font-size: 0.85rem;
+}
+.form-row {
+grid-template-columns: 1fr;
+gap: 0;
+}
+.tabs {
+width: 100%;
+}
+.tab {
+padding: 10px 16px;
+font-size: 0.85rem;
+}
+.filters {
+gap: 8px;
+}
+.filter-chip {
+padding: 8px 16px;
+font-size: 0.8rem;
+}
+.receipt-status-card {
+padding: 16px;
+}
+.social-grid {
+grid-template-columns: 1fr;
+gap: 16px;
+}
+.social-card {
+padding: 20px;
+}
+.setting-item {
+padding: 12px 0;
+}
+.setting-info h5 {
+font-size: 0.85rem;
+}
+.setting-info p {
+font-size: 0.75rem;
+}
+.btn {
+padding: 12px 20px;
+font-size: 0.875rem;
+}
+.btn-sm {
+padding: 8px 16px;
+font-size: 0.8rem;
+}
+.btn-lg {
+padding: 14px 24px;
+font-size: 0.9rem;
+}
+.toast {
+min-width: auto;
 width: calc(100% - 40px);
-right: 20px;
+padding: 12px 16px;
+}
+.toast-container {
+top: 70px;
+right: 12px;
+}
+table {
+min-width: 500px;
+font-size: 0.85rem;
+}
+th, td {
+padding: 12px 10px;
 }
 }
 @media (max-width: 480px) {
@@ -1797,7 +1931,7 @@ html {
 font-size: 14px;
 }
 .page-title h1 {
-font-size: 1.25rem;
+font-size: 1.1rem;
 }
 .stat-card .value {
 font-size: 1.4rem;
@@ -1807,10 +1941,62 @@ font-size: 1.75rem;
 }
 .btn {
 padding: 12px 16px;
-font-size: 0.9rem;
+font-size: 0.85rem;
 }
 .card {
 padding: 16px;
+}
+.auth-title {
+font-size: 1.3rem;
+}
+.auth-subtitle {
+font-size: 0.9rem;
+}
+.alert-content h4 {
+font-size: 0.85rem;
+}
+.alert-content p {
+font-size: 0.75rem;
+}
+.upload-zone h4 {
+font-size: 1rem;
+}
+.upload-zone p {
+font-size: 0.8rem;
+}
+.campaign-info h4 {
+font-size: 0.95rem;
+}
+.campaign-info p {
+font-size: 0.8rem;
+}
+.tags {
+gap: 6px;
+}
+.tag {
+padding: 4px 10px;
+font-size: 0.7rem;
+}
+.form-group label {
+font-size: 0.85rem;
+}
+.form-group input,
+.form-group select {
+padding: 12px;
+font-size: 0.9rem;
+}
+.modal {
+padding: 24px 20px;
+}
+.modal-header h3 {
+font-size: 1.1rem;
+}
+.bottom-nav-item {
+padding: 6px 8px;
+font-size: 0.7rem;
+}
+.bottom-nav-item i {
+font-size: 1.1rem;
 }
 }
 ::-webkit-scrollbar {
@@ -1864,7 +2050,8 @@ background: var(--bg);
 <!-- Toast Container -->
 <div class="toast-container" id="toastContainer"></div>
 <!-- ==================== AUTH PAGES ==================== -->
-<div class="auth-container" id="authContainer">
+<!-- FIXED: Added 'active' class here so login shows FIRST -->
+<div class="auth-container active" id="authContainer">
 <div class="auth-wrapper">
 <div class="auth-left">
 <div class="auth-left-content">
@@ -1983,8 +2170,8 @@ Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
 <i class="fa-solid fa-bars" id="sidebarToggleIcon"></i>
 </button>
 <div class="page-title-top">
-<h1 id="topNavTitle">Your Creator Hub</h1>
-<p id="topNavSubtitle">Track your earnings, posts & rewards in one place</p>
+<h1 id="topNavTitle">Dashboard</h1>
+<p id="topNavSubtitle">Welcome back!</p>
 </div>
 </div>
 <div class="top-nav-right">
@@ -2034,7 +2221,7 @@ Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
 <li class="nav-item">
 <a class="nav-link active" onclick="showPage('dashboard', this)">
 <i class="fa-solid fa-house"></i>
-<span>Your Creator Hub</span>
+<span>Dashboard</span>
 </a>
 </li>
 <li class="nav-item">
@@ -2047,7 +2234,7 @@ Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
 <li class="nav-item">
 <a class="nav-link" onclick="showPage('campaigns', this)">
 <i class="fa-solid fa-handshake"></i>
-<span>Open Gigs</span>
+<span>Brand Collabs</span>
 <span class="badge-count">3</span>
 </a>
 </li>
@@ -2059,13 +2246,13 @@ Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
 <li class="nav-item">
 <a class="nav-link" onclick="showPage('wallet', this)">
 <i class="fa-solid fa-coins"></i>
-<span>Your Earnings</span>
+<span>Wallet</span>
 </a>
 </li>
 <li class="nav-item">
 <a class="nav-link" onclick="showPage('analytics', this)">
 <i class="fa-solid fa-chart-line"></i>
-<span>Insights</span>
+<span>Analytics</span>
 </a>
 </li>
 </ul>
@@ -2076,7 +2263,7 @@ Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
 <li class="nav-item">
 <a class="nav-link" onclick="showPage('social', this)">
 <i class="fa-solid fa-share-nodes"></i>
-<span>My Platforms</span>
+<span>Social Links</span>
 </a>
 </li>
 <li class="nav-item">
@@ -2093,7 +2280,7 @@ Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
 <li class="nav-item">
 <a class="nav-link" onclick="showPage('bank', this)">
 <i class="fa-solid fa-building-columns"></i>
-<span>Payment Details</span>
+<span>Bank Details</span>
 </a>
 </li>
 <li class="nav-item">
@@ -2113,15 +2300,15 @@ Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
 </div>
 <!-- ==================== MAIN CONTENT ==================== -->
 <div class="main-content" id="mainContent">
-<!-- 1. DASHBOARD PAGE (Your Creator Hub) -->
+<!-- 1. DASHBOARD PAGE -->
 <section id="dashboard" class="page-section active">
 <div class="alert-card">
 <div class="alert-icon">
 <i class="fa-solid fa-triangle-exclamation"></i>
 </div>
 <div class="alert-content">
-<h4><i class="fa-solid fa-lock"></i> Unlock Your Account</h4>
-<p>Verify your profile to start earning & uploading bills! 🔓</p>
+<h4><i class="fa-solid fa-lock"></i> Complete Verification</h4>
+<p>Finish KYC to unlock instant withdrawals and start earning! 🔓</p>
 </div>
 <button class="btn btn-secondary btn-sm" onclick="showPage('kyc', document.querySelectorAll('.nav-link')[7])">
 <i class="fa-solid fa-bolt"></i> Verify Now
@@ -2137,7 +2324,7 @@ Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
 </div>
 </div>
 <div class="card stat-card pink">
-<h3><i class="fa-solid fa-receipt"></i> Your Bills</h3>
+<h3><i class="fa-solid fa-receipt"></i> Receipts Submitted</h3>
 <div class="value" id="receiptCount">12</div>
 <div class="sub-text">
 <i class="fa-solid fa-check-circle"></i>
@@ -2145,7 +2332,7 @@ Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
 </div>
 </div>
 <div class="card stat-card green">
-<h3><i class="fa-solid fa-fire"></i> My Collabs</h3>
+<h3><i class="fa-solid fa-fire"></i> Active Collabs</h3>
 <div class="value">3</div>
 <div class="sub-text text-warning">
 <i class="fa-solid fa-clock"></i>
@@ -2182,7 +2369,7 @@ Earnings Over Time 📈
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
 <h3 style="font-size:1.3rem; font-weight:700;">
 <i class="fa-solid fa-receipt" style="color:var(--secondary);"></i>
-Recent Bills
+Recent Receipts
 </h3>
 <button class="btn btn-ghost btn-sm" style="padding: 10px 20px;" onclick="showPage('receipts', document.querySelectorAll('.nav-link')[1])">
 View All <i class="fa-solid fa-arrow-right"></i>
@@ -2325,14 +2512,14 @@ Receipt Status Tracker
 </div>
 </div>
 </section>
-<!-- 3. BRAND COLLABS PAGE (Open Gigs) -->
+<!-- 3. BRAND COLLABS PAGE -->
 <section id="campaigns" class="page-section">
 <div class="tabs">
 <div class="tab active" onclick="switchCampaignTab('available', this)">
-<i class="fa-solid fa-fire"></i> Open Gigs
+<i class="fa-solid fa-fire"></i> Available Collabs
 </div>
 <div class="tab" onclick="switchCampaignTab('active', this)">
-<i class="fa-solid fa-briefcase"></i> My Collabs
+<i class="fa-solid fa-briefcase"></i> My Active Collabs
 </div>
 <div class="tab" onclick="switchCampaignTab('completed', this)">
 <i class="fa-solid fa-circle-check"></i> Completed
@@ -2439,10 +2626,10 @@ Paid
 </div>
 </div>
 </section>
-<!-- 4. WALLET PAGE (Your Earnings) -->
+<!-- 4. WALLET PAGE -->
 <section id="wallet" class="page-section">
 <div class="wallet-hero" onclick="copyToClipboard('SAR 2,500.00')">
-<h3><i class="fa-solid fa-wallet"></i> Your Earnings <i class="fa-regular fa-copy" style="font-size:0.8rem; opacity:0.7; margin-left:8px;"></i></h3>
+<h3><i class="fa-solid fa-wallet"></i> Available Balance <i class="fa-regular fa-copy" style="font-size:0.8rem; opacity:0.7; margin-left:8px;"></i></h3>
 <div class="balance">SAR 2,500.00</div>
 <div class="wallet-actions">
 <button class="btn">
@@ -2524,7 +2711,7 @@ Transaction History
 </div>
 </div>
 </section>
-<!-- 5. ANALYTICS PAGE (Insights) -->
+<!-- 5. ANALYTICS PAGE -->
 <section id="analytics" class="page-section">
 <div class="stats-grid">
 <div class="card stat-card blue">
@@ -2588,7 +2775,7 @@ Engagement Trends 📊
 </div>
 </div>
 </section>
-<!-- 6. SOCIAL LINKS PAGE (My Platforms) -->
+<!-- 6. SOCIAL LINKS PAGE -->
 <section id="social" class="page-section">
 <div class="card">
 <h3 style="font-size:1.5rem; font-weight:800; margin-bottom:12px;">
@@ -2652,10 +2839,10 @@ Connect
 <div class="card">
 <h3 style="font-size:1.5rem; font-weight:800; margin-bottom:12px;">
 <i class="fa-solid fa-shield-halved" style="color:var(--accent);"></i>
-Unlock Your Account 🔐
+Identity Verification 🔐
 </h3>
 <p style="color:var(--text-light); margin-bottom:32px;">
-Verify your profile to start earning & uploading bills. Takes 24-48 hours! ⏰
+Required for withdrawals to Saudi banks. Takes 24-48 hours! ⏰
 </p>
 <form onsubmit="handleKYCSubmit(event)">
 <div class="form-group">
@@ -2682,24 +2869,24 @@ Make sure your face is clearly visible and well-lit
 </div>
 <button class="btn btn-primary btn-lg btn-full" type="submit">
 <i class="fa-solid fa-paper-plane"></i>
-Verify Now
+Submit for Verification
 </button>
 </form>
 </div>
 </section>
-<!-- 8. BANK DETAILS PAGE (Payment Details) -->
+<!-- 8. BANK DETAILS PAGE -->
 <section id="bank" class="page-section">
 <div class="card">
 <h3 style="font-size:1.5rem; font-weight:800; margin-bottom:12px;">
 <i class="fa-solid fa-building-columns" style="color:var(--primary);"></i>
-Payment Details 💰
+Bank Account Information 💰
 </h3>
 <p style="color:var(--text-light); margin-bottom:32px;">
 Ensure IBAN matches your verified name or payments will fail! ⚠️
 </p>
 <form onsubmit="handleBankSubmit(event)">
 <div class="form-group">
-<label>IBAN (Saudi Arabia) 🇸</label>
+<label>IBAN (Saudi Arabia) 🇸🇦</label>
 <input type="text" id="ibanInput" placeholder="SAxx xxxx xxxx xxxx xxxx xxxx" style="font-family:monospace; letter-spacing:1px;" required>
 <div class="input-hint">
 <i class="fa-solid fa-circle-info"></i>
@@ -2726,7 +2913,7 @@ Must start with SA + 22 digits (24 characters total)
 </div>
 <button class="btn btn-success btn-lg btn-full" type="submit" style="background:var(--accent); color:white;">
 <i class="fa-solid fa-check"></i>
-Save Payment Details
+Save Bank Details
 </button>
 </form>
 </div>
@@ -2885,8 +3072,10 @@ function checkAuth() {
 const savedUser = localStorage.getItem('fluenpay_user');
 if (savedUser) {
 currentUser = JSON.parse(savedUser);
+// Remove active class to show dashboard if logged in
 document.getElementById('authContainer').classList.remove('active');
 } else {
+// Keep active class to show login if logged out
 document.getElementById('authContainer').classList.add('active');
 }
 }
@@ -2953,6 +3142,14 @@ showToast('Logged out successfully! 👋', 'success');
 }
 // ==================== SIDEBAR FUNCTIONS ====================
 function toggleSidebar() {
+if (window.innerWidth <= 768) {
+// Mobile - toggle sidebar visibility
+const sidebar = document.getElementById('sidebar');
+const overlay = document.querySelector('.mobile-overlay');
+sidebar.classList.toggle('open');
+overlay.classList.toggle('active');
+} else {
+// Desktop - toggle collapsed state
 const sidebar = document.getElementById('sidebar');
 const topNav = document.getElementById('topNav');
 const mainContent = document.getElementById('mainContent');
@@ -2975,7 +3172,8 @@ if(analyticsChart) analyticsChart.resize();
 if(engagementChart) engagementChart.resize();
 }, 350);
 }
-if(localStorage.getItem('sidebarCollapsed') === 'true') {
+}
+if(localStorage.getItem('sidebarCollapsed') === 'true' && window.innerWidth > 768) {
 document.getElementById('sidebar').classList.add('collapsed');
 document.getElementById('topNav').classList.add('collapsed');
 document.getElementById('mainContent').classList.add('collapsed');
@@ -2985,8 +3183,8 @@ document.getElementById('sidebarToggleIcon').classList.add('fa-bars-staggered');
 function toggleMobileMenu() {
 const sidebar = document.getElementById('sidebar');
 const overlay = document.querySelector('.mobile-overlay');
-sidebar.classList.toggle('open');
-overlay.classList.toggle('active');
+sidebar.classList.remove('open');
+overlay.classList.remove('active');
 }
 // ==================== NOTIFICATIONS FUNCTIONS ====================
 const notificationsData = [
@@ -3134,20 +3332,25 @@ showToast('Copied to Clipboard! 📋', 'success');
 }
 // ==================== PAGE NAVIGATION ====================
 function showPage(pageId, element) {
+// Close mobile sidebar if open
 if (window.innerWidth <= 768) {
 const sidebar = document.getElementById('sidebar');
 const overlay = document.querySelector('.mobile-overlay');
 sidebar.classList.remove('open');
 overlay.classList.remove('active');
 }
+// Hide all sections
 document.querySelectorAll('.page-section').forEach(section => {
 section.classList.remove('active');
 });
+// Show target section
 document.getElementById(pageId).classList.add('active');
+// Update sidebar active state
 document.querySelectorAll('.nav-link').forEach(link => {
 link.classList.remove('active');
 });
 if(element) element.classList.add('active');
+// Update bottom nav active state
 document.querySelectorAll('.bottom-nav-item').forEach(item => {
 item.classList.remove('active');
 });
@@ -3155,22 +3358,25 @@ const bottomNavMap = {'dashboard':0, 'receipts':1, 'wallet':2, 'settings':3};
 if(bottomNavMap[pageId] !== undefined) {
 document.querySelectorAll('.bottom-nav-item')[bottomNavMap[pageId]].classList.add('active');
 }
+// Update page titles
 const titles = {
-'dashboard': { title: 'Your Creator Hub', subtitle: 'Track your earnings, posts & rewards in one place' },
+'dashboard': { title: 'Dashboard', subtitle: 'Welcome back! Here\'s what\'s happening 🎉' },
 'receipts': { title: 'Snap & Earn', subtitle: 'Upload receipts, get cashback! 🔥' },
-'campaigns': { title: 'Open Gigs', subtitle: 'Find amazing brands to partner with 🚀' },
-'wallet': { title: 'Your Earnings', subtitle: 'Your earnings, withdraw anytime! 💰' },
-'analytics': { title: 'Insights', subtitle: 'Track your performance 📊' },
-'social': { title: 'My Platforms', subtitle: 'Connect your platforms 🔗' },
+'campaigns': { title: 'Brand Collabs', subtitle: 'Find amazing brands to partner with 🚀' },
+'wallet': { title: 'Wallet', subtitle: 'Your earnings, withdraw anytime! 💰' },
+'analytics': { title: 'Analytics', subtitle: 'Track your performance 📊' },
+'social': { title: 'Social Links', subtitle: 'Connect your platforms 🔗' },
 'kyc': { title: 'Verification', subtitle: 'Complete to unlock withdrawals 🔐' },
-'bank': { title: 'Payment Details', subtitle: 'Where we send your money 🏦' },
+'bank': { title: 'Bank Details', subtitle: 'Where we send your money 🏦' },
 'settings': { title: 'Settings', subtitle: 'Customize your experience ⚙️' }
 };
 if(titles[pageId]) {
 document.getElementById('topNavTitle').innerText = titles[pageId].title;
 document.getElementById('topNavSubtitle').innerText = titles[pageId].subtitle;
 }
+// Scroll to top
 document.querySelector('.main-content').scrollTop = 0;
+// Initialize charts if needed
 setTimeout(() => {
 if(pageId === 'analytics') {
 initAnalyticsCharts();
@@ -3254,7 +3460,7 @@ btn.disabled = true;
 await new Promise(resolve => setTimeout(resolve, 1500));
 btn.innerHTML = originalText;
 btn.disabled = false;
-showToast('Payment details saved! 💰', 'success');
+showToast('Bank details saved! 💰', 'success');
 }
 // ==================== MODAL FUNCTIONS ====================
 function showModal(modalId) {
